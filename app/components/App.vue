@@ -2,7 +2,8 @@
     <Page>
         <ActionBar>
             <GridLayout width="100%" columns="auto, *">
-                <Label text="MENU" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/>
+                <Label :text="'fa-bars' | fonticon" class="fa" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/>
+                
                 <Label class="title" text="Pilot Voice"  col="1"/>
             </GridLayout>
         </ActionBar>
@@ -12,7 +13,7 @@
                 <Label class="drawer-header" text="Profile"/>
 
                 <Label class="drawer-item" text="Home"/>
-                <Label class="drawer-item" text="Setting"/>
+                <Label class="drawer-item" text="Settings"/>
                 <Label class="drawer-item" text="Sign In"/>
             </StackLayout>
 
