@@ -18,7 +18,15 @@
             </StackLayout>
 
             <GridLayout ~mainContent columns="*" rows="*">
-                <Label class="message" :text="msg" col="0" row="0"/>
+            <ListView class="list-group" for="script in scripts" @itemTap="onItemTap"
+            style="height:1250px">
+            <v-template>
+                <FlexboxLayout flexDirection="row" class="list-group-item">
+                    <Label textWrap="true" :text="script.line" class="list-group-item-heading" style="width: 100%" />
+                </FlexboxLayout>
+            </v-template>
+        </ListView>
+             /*   <Label class="message" :text="msg" col="0" row="0"/>*/
             </GridLayout>
         </RadSideDrawer>
     </Page>
@@ -26,9 +34,28 @@
 
 <script>
   export default {
+      methods: {
+            onItemTap: function(args) {
+                console.log("Item with index: " + args.index + " tapped");
+            }
+        },
     data() {
       return {
-        msg: 'Hello Pilot Voice!'
+          scripts: [{
+                        line: "Lockhart traffic, Tomahawk  91372, downwind 18, Lockhart",
+                        
+                    },
+                    {
+                        line: "Lockhart traffic, Tomahawk  91372, downwind 36, Lockhart",
+                        
+                    },
+                    {
+                        line: "Lockhart traffic, Tomahawk  91372, base 18, Lockhart",
+                       
+                    },
+                   
+                ]
+       // msg: 'Hello Pilot Voice!'
       }
     }
   }
@@ -36,7 +63,7 @@
 
 <style scoped>
     ActionBar {
-        background-color: #53ba82;
+        background-color: #153eaf;
         color: #ffffff;
     }
 
@@ -55,7 +82,7 @@
     .drawer-header {
         padding: 50 16 16 16;
         margin-bottom: 16;
-        background-color: #53ba82;
+        background-color: #153eaf;
         color: #ffffff;
         font-size: 24;
     }
