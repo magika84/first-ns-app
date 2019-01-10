@@ -3,11 +3,16 @@
 @import '~nativescript-theme-core/scss/blue';
 
 // Override variables here
-
+@import './assets/css/custom.css';  
 @import '~nativescript-theme-core/scss/index';
+
 
 .fa {
     font-family: FontAwesome;
+}
+
+.h2 {
+    color: white;
 }
 
 // Global SCSS styling

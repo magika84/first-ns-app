@@ -2,13 +2,11 @@
     <Page>
         <ActionBar>
             <GridLayout width="100%" columns="auto, *">
-                <Label :text="'fa-bars' | fonticon" class="fa" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/>
-                
-                <Label class="title" text="Pilot Voice"  col="1"/>
-            </GridLayout>
+                <Label :text="'fa-bars' | fonticon" class="fa h2" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/>
+               <Label class="title h2" text="Pilot Voice"  col="1"/>
+           </GridLayout>
         </ActionBar>
-
-        <RadSideDrawer ref="drawer">
+              <RadSideDrawer ref="drawer">
             <StackLayout ~drawerContent backgroundColor="#ffffff">
                 <Label class="drawer-header" text="Profile"/>
 
@@ -17,18 +15,19 @@
                 <Label class="drawer-item" text="Sign In"/>
             </StackLayout>
 
-            <GridLayout ~mainContent columns="*" rows="*">
-            <ListView class="list-group" for="script in scripts" @itemTap="onItemTap"
-            style="height:1250px">
+            <StackLayout ~mainContent>
+           
+                <ListView class="list-group" for="script in scripts" @itemTap="onItemTap">
             <v-template>
-                <FlexboxLayout flexDirection="row" class="list-group-item">
-                    <Label textWrap="true" :text="script.line" class="list-group-item-heading" style="width: 100%" />
-                </FlexboxLayout>
+                <StackLayout  class="list-group-item">
+                    <Label textWrap="true" :text="script.line" class="list-group-item-heading"  />
+                    <Label text="Tap to Select" class="list-group-item-text"/>
+                </StackLayout>
             </v-template>
-        </ListView>
-             /*   <Label class="message" :text="msg" col="0" row="0"/>*/
-            </GridLayout>
-        </RadSideDrawer>
+                 </ListView>
+            <Label  :text="'fa-play-circle-o' | fonticon" class="fa h1" @itemTap="onItemTap"/>
+            </StackLayout>
+         </RadSideDrawer>
     </Page>
 </template>
 
@@ -42,20 +41,24 @@
     data() {
       return {
           scripts: [{
-                        line: "Lockhart traffic, Tomahawk  91372, downwind 18, Lockhart",
+                        line: "Airport Name:",
                         
                     },
                     {
-                        line: "Lockhart traffic, Tomahawk  91372, downwind 36, Lockhart",
+                        line: "Aircraft ID",
                         
                     },
                     {
-                        line: "Lockhart traffic, Tomahawk  91372, base 18, Lockhart",
+                        line: "N reg",
                        
                     },
+                    {
+                        line: "Action",
+                       
+                    }
                    
                 ]
-       // msg: 'Hello Pilot Voice!'
+
       }
     }
   }
@@ -64,7 +67,7 @@
 <style scoped>
     ActionBar {
         background-color: #153eaf;
-        color: #ffffff;
+       color: #ffffff;
     }
 
     .title {
