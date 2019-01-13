@@ -1,13 +1,8 @@
 import Vue from 'nativescript-vue'
 import App from './components/App'
 import VueDevtools from 'nativescript-vue-devtools'
-
 import {TNSFontIcon, fonticon} from 'nativescript-fonticon';
-//application.cssFile = "app.scss";
-//var application = require("tns-core-modules/application");
-//application.setCssFileName("app.scss");
 
-//application.start({ moduleName: "main-page" });
 
 TNSFontIcon.debug = true;
 TNSFontIcon.paths = {
