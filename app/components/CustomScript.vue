@@ -1,23 +1,22 @@
 <template>
   <Page >
-    <ActionBar>
+    <ActionBar class="action-bar">
       <GridLayout width="100%" columns="auto, *">
         <Label
           :text="'fa-bars' | fonticon"
-          class="fa h2"
+          class="fa"
           @tap="$refs.drawer.nativeView.showDrawer()"
           col="0"
         />
-        <Label class="title h2" text="Pilot Voice" col="1"/>
+        <Label class="h1" text="Pilot Voice" col="1"/>
       </GridLayout>
     </ActionBar>
     <RadSideDrawer ref="drawer">
-      <StackLayout ~drawerContent  backgroundColor="#ffffff">
-        <Label class="drawer-header" text="Profile"/>
-
-        <Label class="drawer-item" text="Home"/>
-        <Label class="drawer-item" text="Settings"/>
-        <Label class="drawer-item" text="Sign In"/>
+      <StackLayout ~drawerContent backgroundColor="#ffffff">
+        <Label class="drawer-header sidedrawer-header" text="Profile"/>
+        <Label class="drawer-item sidedrawer-list-item" text="Home"/>
+        <Label class="drawer-item sidedrawer-list-item" text="Settings"/>
+        <Label class="drawer-item sidedrawer-list-item" text="Sign In"/>
       </StackLayout>
 
       <StackLayout ~mainContent >
@@ -42,14 +41,14 @@
 </StackLayout>
          <StackLayout dock="bottom" height="10%" style="border-color:#E4E4E4;border-width:1;background:#fff;">
                         <StackLayout orientation="horizontal">
-                            <StackLayout class="navItem" @tap="homeTap()">
+                            <StackLayout class="navItem tab-view" @tap="homeTap()">
                                 <Label text="" android:class="notificationAndroid"
                                     ios:class="notification" opacity="0" />
                                 <Label :text="'fa-plane' | fonticon" android:style="font-size:23;margin-top:-15"
                                     ios:style="font-size:29;margin-top:-15"
                                     class="fa" />
                             </StackLayout>
-                            <StackLayout class="navItem" @tap="pretextTap()">
+                            <StackLayout class="navItem tab-view" @tap="pretextTap()">
                                 <Label text="" android:class="notificationAndroid"
                                     ios:class="notification" opacity="0" />
                                 <Label :text="'fa-list' | fonticon" :color="mainColor"
@@ -57,7 +56,7 @@
                                     ios:style="font-size:30;margin-top:-15"
                                     class="fa" />
                             </StackLayout>
-                            <StackLayout class="navItem" @tap="customTap()">
+                            <StackLayout class="navItem tab-view" @tap="customTap()">
                                 <Label text="" android:class="notificationAndroid"
                                     ios:class="notification" opacity="0" />
                                 <Label :text="'fa-commenting-o' | fonticon" :color="profileColor"
@@ -65,7 +64,7 @@
                                     ios:style="font-size:30;margin-top:-15"
                                     class="fa" />
                             </StackLayout>
-                             <StackLayout class="navItem" @tap="fourTap()">
+                             <StackLayout class="navItem tab-view" @tap="fourTap()">
                                 <Label text="" android:class="notificationAndroid"
                                     ios:class="notification" />
                                 <Label :text="'fa-tasks' | fonticon" android:style="font-size:25;margin-top:-15"
@@ -133,34 +132,21 @@ export default {
 </script>
 
 <style scoped>
-ActionBar {
-  background-color: #153eaf;
-  color: #ffffff;
-}
-
 .title {
   text-align: left;
   padding-left: 16;
 }
 
-.message {
-  vertical-align: center;
-  text-align: center;
-  font-size: 20;
-  color: #333333;
-}
+
 
 .drawer-header {
   padding: 50 16 16 16;
   margin-bottom: 16;
-  background-color: #153eaf;
-  color: #ffffff;
   font-size: 24;
 }
 
 .drawer-item {
   padding: 8 16;
-  color: #333333;
   font-size: 16;
 }
 </style>

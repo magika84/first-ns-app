@@ -3,19 +3,19 @@
 @import '~nativescript-theme-core/scss/blue';
 
 // Override variables here
-@import './assets/css/custom.css';  
-@import '~nativescript-theme-core/scss/index';
 
+//@import '~nativescript-theme-core/scss/index';
+@import './assets/css/custom.css';  
 
 .fa {
     font-family: FontAwesome;
 }
-.h1 {
+/*.h1 {
     size: 120
 }
 .h2 {
     color: white;
-}
+}*/
 .navItem{
 	width:24%;
 	text-align: center;
