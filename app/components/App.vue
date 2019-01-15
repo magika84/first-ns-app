@@ -39,7 +39,7 @@
   <TabViewItem class="fa h3" :title="'fa-plane' | fonticon">
         <StackLayout dock="top" height="90%" width="100%">
           <Image class="logo" src="~/assets/images/logo.png"></Image>
-          <ListView class="fa list-group" for="item in items" @itemTap="onItemTap">
+          <ListView class="fa list-group" for="item in items" @itemTap="onHomeItemTap">
             <v-template>
               <StackLayout class="fa list-group-item">
                 <Label textWrap="true" :text="item.line" class="list-group-item-heading"/>
@@ -59,14 +59,14 @@
 
           <GridLayout columns="2*,*" rows="*" width="100%" height="10%">
             <!-- Configures the text field and ensures that pressing Return on the keyboard produces the same result as tapping the button. -->
-            <TextField col="0" row="0" v-model="textFieldValue" hint="Enternew script..." editable="true" @returnPress="onButtonTap" /> 
+            <TextField col="0" row="0" v-model="textFieldValue" hint="Enter new script..." editable="true" @returnPress="onButtonTap" /> 
 
             <Button col="1" row="0" class="btn btn-primary btn-rounded-sm" text="Add script" @tap="onButtonTap" />
           </GridLayout>
 
-          <ListView class="list-group" for="todo in todos" @itemTap="onItemTap" style="height:75%">
+          <ListView class="list-group" for="script in scripts" style="height:75%" @itemTap="onPretextItemTap">
             <v-template>
-              <Label :text="todo.name" textWrap="true" class="list-group-item-heading h3"  />
+              <Label :text="script.name" textWrap="true" class="list-group-item-heading h3"  />
             </v-template>
           </ListView>
         </StackLayout>
@@ -92,11 +92,14 @@ export default {
     onButtonTap() {
       if (this.textFieldValue === "") return; // Prevents users from entering an empty string.
       console.log("New task added: " + this.textFieldValue + "."); // Logs the newly added task in the console for debugging.
-      this.todos.unshift({ name: this.textFieldValue }); // Adds tasks in the ToDo array. Newly added tasks are immediately shown on the screen.
+      this.scripts.unshift({ name: this.textFieldValue }); // Adds tasks in the ToDo array. Newly added tasks are immediately shown on the screen.
       this.textFieldValue = ""; // Clears the text field so that users can start adding new tasks immediately.
     },
-    onItemTap: function(args) {
-      console.log("Item with index: " + args.index + " tapped");
+    onHomeItemTap: function(args) {
+      console.log("Item on home page with index: " + args.index + " tapped");
+    },
+    onPretextItemTap: function(args){
+      console.log("Item on pretext page with index: " + args.index + " tapped");
     },
     onPlayTap: function(args) {
       console.log("Play icon tapped!");
@@ -121,7 +124,7 @@ export default {
   },
   data() {
     return {
-      todos: [],
+      scripts: [],
       textFieldValue: "",
       items: [
         {
