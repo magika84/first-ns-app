@@ -1,9 +1,10 @@
+<script src="http://localhost:8098"></script>
 <template>
   <Page>
     // Action bar
     <ActionBar class="action-bar">
       <GridLayout width="100%" columns="auto, *">
-        <Label width="10%"
+        <Label width="10%" 
           :text="'fa-bars' | fonticon"
           class="fa h3"
           @tap="$refs.drawer.nativeView.showDrawer()"
@@ -30,6 +31,12 @@
         
         <DockLayout>
 
+
+
+          // Add Navigation tabs
+          
+<TabView class="tab-view" :selectedIndex="selectedIndex" androidTabsPosition="bottom">
+  <TabViewItem class="fa h3" :title="'fa-plane' | fonticon">
         <StackLayout dock="top" height="90%" width="100%">
           <Image class="logo" src="~/assets/images/logo.png"></Image>
           <ListView class="list-group" for="item in items" @itemTap="onItemTap">
@@ -46,45 +53,15 @@
           <Label :text="'fa-commenting' | fonticon"  class="fa h1" textAlignment="center" @tap="onPlayTap"/>
 
         </StackLayout>
-
-          // Add Navigation tabs
-          
-
-         <StackLayout dock="bottom" height="10%" > 
-    
-                        <StackLayout orientation="horizontal" class="tab-view">
-                            <StackLayout class="navItem tab-view" @tap="homeTap()">
-                                <Label text="" android:class="notificationAndroid"
-                                    ios:class="notification" opacity="0" />
-                                <Label :text="'fa-plane' | fonticon" android:style="font-size:23;margin-top:-15"
-                                    ios:style="font-size:29;margin-top:-15"
-                                    class="fa" />
-                            </StackLayout>
-                            <StackLayout class="navItem tab-view" @tap="pretextsTap()">
-                                <Label text="" android:class="notificationAndroid"
-                                    ios:class="notification" opacity="0" />
-                                <Label :text="'fa-list' | fonticon" :color="mainColor"
-                                    android:style="font-size:25;margin-top:-15"
-                                    ios:style="font-size:30;margin-top:-15"
-                                    class="fa" />
-                            </StackLayout>
-                            <StackLayout class="navItem tab-view" @tap="customTap()">
-                                <Label text="" android:class="notificationAndroid"
-                                    ios:class="notification" opacity="0" />
-                                <Label :text="'fa-commenting-o' | fonticon" :color="profileColor"
-                                    android:style="font-size:25;margin-top:-15"
-                                    ios:style="font-size:30;margin-top:-15"
-                                    class="fa" />
-                            </StackLayout>
-                             <StackLayout class="navItem tab-view" @tap="fourTap()">
-                                <Label text="" android:class="notificationAndroid"
-                                    ios:class="notification" />
-                                <Label :text="'fa-tasks' | fonticon" android:style="font-size:25;margin-top:-15"
-                                    ios:style="font-size:30;margin-top:-15"
-                                    class="fa" />
-                            </StackLayout>                            
-                        </StackLayout>
-         </StackLayout> 
+  </TabViewItem>
+  <TabViewItem class="fa h3" :title="'fa-list' | fonticon" >
+    <Label text="Content for Tab 2" />
+  </TabViewItem>
+  <TabViewItem class="fa h3" :title="'fa-commenting-o' | fonticon" >
+    <Label text="Content for Tab 3" />
+  </TabViewItem>
+</TabView>
+         
         </DockLayout>
       </StackLayout>
 
