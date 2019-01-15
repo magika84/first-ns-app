@@ -35,13 +35,13 @@
 
           // Add Navigation tabs
           
-<TabView class="tab-view" :selectedIndex="selectedIndex" androidTabsPosition="bottom">
+<TabView class="tab-view" androidTabsPosition="bottom">
   <TabViewItem class="fa h3" :title="'fa-plane' | fonticon">
         <StackLayout dock="top" height="90%" width="100%">
           <Image class="logo" src="~/assets/images/logo.png"></Image>
-          <ListView class="list-group" for="item in items" @itemTap="onItemTap">
+          <ListView class="fa list-group" for="item in items" @itemTap="onItemTap">
             <v-template>
-              <StackLayout class="list-group-item">
+              <StackLayout class="fa list-group-item">
                 <Label textWrap="true" :text="item.line" class="list-group-item-heading"/>
                 <Label text="Tap to Select" class="list-group-item-text"/>
               </StackLayout>
@@ -55,7 +55,21 @@
         </StackLayout>
   </TabViewItem>
   <TabViewItem class="fa h3" :title="'fa-list' | fonticon" >
-    <Label text="Content for Tab 2" />
+    <StackLayout orientation="vertical" width="100%" height="100%">
+
+          <GridLayout columns="2*,*" rows="*" width="100%" height="10%">
+            <!-- Configures the text field and ensures that pressing Return on the keyboard produces the same result as tapping the button. -->
+            <TextField col="0" row="0" v-model="textFieldValue" hint="Enternew script..." editable="true" @returnPress="onButtonTap" /> 
+
+            <Button col="1" row="0" class="btn btn-primary btn-rounded-sm" text="Add script" @tap="onButtonTap" />
+          </GridLayout>
+
+          <ListView class="list-group" for="todo in todos" @itemTap="onItemTap" style="height:75%">
+            <v-template>
+              <Label :text="todo.name" textWrap="true" class="list-group-item-heading h3"  />
+            </v-template>
+          </ListView>
+        </StackLayout>
   </TabViewItem>
   <TabViewItem class="fa h3" :title="'fa-commenting-o' | fonticon" >
     <Label text="Content for Tab 3" />
@@ -72,13 +86,15 @@
 </template>
 
 <script>
-import CustomScript from "./CustomScript";
-import PreTexts from "./PreTexts";
-
-
 export default {
 
   methods: {
+    onButtonTap() {
+      if (this.textFieldValue === "") return; // Prevents users from entering an empty string.
+      console.log("New task added: " + this.textFieldValue + "."); // Logs the newly added task in the console for debugging.
+      this.todos.unshift({ name: this.textFieldValue }); // Adds tasks in the ToDo array. Newly added tasks are immediately shown on the screen.
+      this.textFieldValue = ""; // Clears the text field so that users can start adding new tasks immediately.
+    },
     onItemTap: function(args) {
       console.log("Item with index: " + args.index + " tapped");
     },
@@ -105,6 +121,8 @@ export default {
   },
   data() {
     return {
+      todos: [],
+      textFieldValue: "",
       items: [
         {
           line: "Takeoff Script:"
