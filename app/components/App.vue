@@ -72,7 +72,22 @@
         </StackLayout>
   </TabViewItem>
   <TabViewItem class="fa h3" :title="'fa-commenting-o' | fonticon" >
-    <Label text="Content for Tab 3" />
+            <StackLayout dock="top" height="90%" width="100%">
+        <ListView class="list-group" for="customitem in customitems" @itemTap="onCustomItemTap">
+          <v-template>
+            <StackLayout class="list-group-item">
+              <Label textWrap="true" :text="customitem.line" class="list-group-item-heading"/>
+              <Label text="Tap to Select" class="list-group-item-text"/>
+            </StackLayout>
+          </v-template>
+        </ListView>
+
+// Add Speak Icon
+
+        <Label :text="'fa-commenting' | fonticon"  class="fa h1" textAlignment="center" @tap="onPlayTap"/>
+
+// Add Navigation tabs
+</StackLayout>
   </TabViewItem>
 </TabView>
          
@@ -100,6 +115,9 @@ export default {
     },
     onPretextItemTap: function(args){
       console.log("Item on pretext page with index: " + args.index + " tapped");
+    },
+    onCustomItemTap: function(args){
+      console.log("Item on custom page with index: " + args.index + " tapped");
     },
     onPlayTap: function(args) {
       console.log("Play icon tapped!");
@@ -135,6 +153,17 @@ export default {
         },
         {
           line: "Landing Script:"
+        }
+      ],
+      customitems: [
+      {
+          line: "Airport Name:"
+        },
+        {
+          line: "Aircraft ID"
+        },
+        {
+          line: "Action"
         }
       ]
     };
