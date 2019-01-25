@@ -23,7 +23,7 @@
     "nativescript-ui-sidedrawer": "^5.1.0",
     "nativescript-vue": "^2.0.0",
     "nativescript-vue-devtools": "^1.0.0",
-    "tns-core-modules": "^5.0.2",
+    "tns-core-modules": "^5.1.2",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
@@ -37,7 +37,7 @@
     "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^1.0.0",
     "lazy": "1.0.11",
-    "nativescript-dev-webpack": "^0.18.5-next-2018-12-27-174347-01",
+    "nativescript-dev-webpack": "0.19.0",
     "nativescript-vue-template-compiler": "^2.0.0",
     "nativescript-worker-loader": "~0.9.0",
     "node-sass": "^4.9.2",

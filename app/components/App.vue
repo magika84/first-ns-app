@@ -1,147 +1,150 @@
 <script src="http://localhost:8098"></script>
 <template>
-  <Page>
-    // Action bar
+  <Page>// Action bar
     <ActionBar class="action-bar">
       <GridLayout width="100%" columns="auto, *">
-        <Label width="10%" 
-          :text="'fa-bars' | fonticon"
-          class="fa h3"
-          @tap="$refs.drawer.nativeView.showDrawer()"
-          col="0"
-        />
+        <Label width="10%" :text="'fa-bars' | fonticon" class="fa h3" @tap="$refs.drawer.nativeView.showDrawer()" col="0"/>
         <Label width="90%" class="h3" text="Pilot Voice" col="1"/>
       </GridLayout>
     </ActionBar>
 
     // Drawer Contents
-
-    
     <RadSideDrawer ref="drawer">
-      <StackLayout ~drawerContent  backgroundColor="#ffffff">
+      <StackLayout ~drawerContent backgroundColor="#ffffff">
         <Label class="drawer-header sidedrawer-header" text="Profile"/>
         <Label class="drawer-item sidedrawer-list-item" text="Home"/>
         <Label class="drawer-item sidedrawer-list-item" text="Settings"/>
         <Label class="drawer-item sidedrawer-list-item" text="Sign In"/>
       </StackLayout>
 
-    // Main Content outside of the drawer
+      // Main Content outside of the drawer
+      <StackLayout ~mainContent>
+        <DockLayout>// Navigation tabs
+          <TabView class="tab-view" androidTabsPosition="bottom">// First page
+            <TabViewItem class="fa h3" :title="'fa-plane' | fonticon">
+              <StackLayout dock="top" height="90%" width="100%">
+                <Image class="logo" src="~/assets/images/logo.png"></Image>
+                <ListView class="fa list-group" for="item in items" @itemTap="onHomeItemTap">
+                  <v-template>
+                    <StackLayout class="fa list-group-item">
+                      <Label textWrap="true" :text="item.line" class="list-group-item-heading"/>
+                      <Label text="Tap to Select" class="list-group-item-text"/>
+                    </StackLayout>
+                  </v-template>
+                </ListView>
 
-      <StackLayout ~mainContent >
-        
-        <DockLayout>
-
-
-
-          // Add Navigation tabs
-          
-<TabView class="tab-view" androidTabsPosition="bottom">
-  <TabViewItem class="fa h3" :title="'fa-plane' | fonticon">
-        <StackLayout dock="top" height="90%" width="100%">
-          <Image class="logo" src="~/assets/images/logo.png"></Image>
-          <ListView class="fa list-group" for="item in items" @itemTap="onHomeItemTap">
-            <v-template>
-              <StackLayout class="fa list-group-item">
-                <Label textWrap="true" :text="item.line" class="list-group-item-heading"/>
-                <Label text="Tap to Select" class="list-group-item-text"/>
+                // Add Play Icon
+                <Label :text="'fa-commenting' | fonticon" class="fa h1" textAlignment="center" @tap="onPlayTap"/>
               </StackLayout>
-            </v-template>
-          </ListView>
+            </TabViewItem>
 
-          // Add Play Icon
+            // second page
+            <TabViewItem class="fa h3" :title="'fa-list' | fonticon">
+              <StackLayout orientation="vertical" width="100%" height="100%">
+                <GridLayout columns="2*,*" rows="*" width="100%" height="10%">
+                  <!-- Configures the text field and ensures that pressing Return on the keyboard produces the same result as tapping the button. -->
+                  <TextField col="0" row="0" v-model="textFieldValue" hint="Enter new script..." editable="true" @returnPress="onButtonTap"/>
+                  <Button col="1" row="0" class="btn btn-primary btn-rounded-sm" text="Add script" @tap="onButtonTap"/>
+                </GridLayout>
 
-          <Label :text="'fa-commenting' | fonticon"  class="fa h1" textAlignment="center" @tap="onPlayTap"/>
+                <ListView class="list-group" for="script in scripts" style="height:75%" @itemTap="onPretextItemTap">
+                  <v-template>
+                    <Label :text="script.name" textWrap="true" class="list-group-item-heading h3"/>
+                  </v-template>
+                </ListView>
+              </StackLayout>
+            </TabViewItem>
 
-        </StackLayout>
-  </TabViewItem>
-  <TabViewItem class="fa h3" :title="'fa-list' | fonticon" >
-    <StackLayout orientation="vertical" width="100%" height="100%">
+            // third page - Custom page
+            <TabViewItem class="fa h3" :title="'fa-commenting-o' | fonticon" >
+              <StackLayout dock="top" height="90%" width="100%">
+                <ListView class="list-group" for="customitem in customitems" @itemTap="onCustomItemTap">
+                  <v-template>
+                    <StackLayout class="list-group-item">
+                      <Label textWrap="true" :text="customitem.line" class="list-group-item-heading"/>
+                      <Label text="Tap to Select" class="list-group-item-text"/>
+                    </StackLayout>
+                  </v-template>
+                </ListView>
 
-          <GridLayout columns="2*,*" rows="*" width="100%" height="10%">
-            <!-- Configures the text field and ensures that pressing Return on the keyboard produces the same result as tapping the button. -->
-            <TextField col="0" row="0" v-model="textFieldValue" hint="Enter new script..." editable="true" @returnPress="onButtonTap" /> 
-
-            <Button col="1" row="0" class="btn btn-primary btn-rounded-sm" text="Add script" @tap="onButtonTap" />
-          </GridLayout>
-
-          <ListView class="list-group" for="script in scripts" style="height:75%" @itemTap="onPretextItemTap">
-            <v-template>
-              <Label :text="script.name" textWrap="true" class="list-group-item-heading h3"  />
-            </v-template>
-          </ListView>
-        </StackLayout>
-  </TabViewItem>
-  <TabViewItem class="fa h3" :title="'fa-commenting-o' | fonticon" >
-            <StackLayout dock="top" height="90%" width="100%">
-        <ListView class="list-group" for="customitem in customitems" @itemTap="onCustomItemTap">
-          <v-template>
-            <StackLayout class="list-group-item">
-              <Label textWrap="true" :text="customitem.line" class="list-group-item-heading"/>
-              <Label text="Tap to Select" class="list-group-item-text"/>
-            </StackLayout>
-          </v-template>
-        </ListView>
-
-// Add Speak Icon
-
-        <Label :text="'fa-commenting' | fonticon"  class="fa h1" textAlignment="center" @tap="onPlayTap"/>
-
-// Add Navigation tabs
-</StackLayout>
-  </TabViewItem>
-</TabView>
-         
+                // Add Speak Icon
+                <Label :text="'fa-commenting' | fonticon" class="fa h1" textAlignment="center" @tap="onPlayTap"/>
+                <Button text="Load" @tap="load" class="btn btn-primary"/>
+                // testing to get data from database
+                
+                <ListView for="airport in $store.state.data" class="list-group">
+                  <v-template>
+                    <StackLayout class="list-group-item">
+                        <Label v-bind:text="airport.faaID + ' ' + airport.airportName"/>
+                    </StackLayout>
+                  </v-template>
+                </ListView>
+                
+              </StackLayout>
+            </TabViewItem>
+          </TabView>
         </DockLayout>
       </StackLayout>
-
     </RadSideDrawer>
-
-
   </Page>
 </template>
 
 <script>
 export default {
-
   methods: {
+    save() {
+      this.$store.dispatch("insert", this.input);
+    },
+    load() {
+      this.$store.dispatch("query");
+      console.log("Pressed load button");
+    },
+    clear() {
+      this.input.faaID = "";
+      this.input.airportName = "";
+    },
     onButtonTap() {
       if (this.textFieldValue === "") return; // Prevents users from entering an empty string.
-      console.log("New task added: " + this.textFieldValue + "."); // Logs the newly added task in the console for debugging.
+        console.log("New task added: " + this.textFieldValue + "."); // Logs the newly added task in the console for debugging.
       this.scripts.unshift({ name: this.textFieldValue }); // Adds tasks in the ToDo array. Newly added tasks are immediately shown on the screen.
       this.textFieldValue = ""; // Clears the text field so that users can start adding new tasks immediately.
     },
     onHomeItemTap: function(args) {
       console.log("Item on home page with index: " + args.index + " tapped");
     },
-    onPretextItemTap: function(args){
+    onPretextItemTap: function(args) {
       console.log("Item on pretext page with index: " + args.index + " tapped");
     },
-    onCustomItemTap: function(args){
+    onCustomItemTap: function(args) {
       console.log("Item on custom page with index: " + args.index + " tapped");
     },
     onPlayTap: function(args) {
       console.log("Play icon tapped!");
-      alert("Play icon tapped! " );
+      alert("Play icon tapped! ");
     },
     homeTap() {},
     fourTap() {},
     pretextsTap() {
       console.log("pretexts tapped!");
       this.$navigateTo(PreTexts, {
-          animated: false,
-          clearHistory: true
+        animated: false,
+        clearHistory: true
       });
     },
-    customTap(){
+    customTap() {
       console.log("custom tapped!");
       this.$navigateTo(CustomScript, {
-          animated: false,
-          clearHistory: true
+        animated: false,
+        clearHistory: true
       });
-    },
+    }
   },
   data() {
     return {
+      input: {
+        faaID: "",
+        airportName: ""
+      },
       scripts: [],
       textFieldValue: "",
       items: [
@@ -156,7 +159,7 @@ export default {
         }
       ],
       customitems: [
-      {
+        {
           line: "Airport Name:"
         },
         {
@@ -172,14 +175,10 @@ export default {
 </script>
 
 <style scoped>
-
-
 .title {
   text-align: left;
   padding-left: 16;
 }
-
-
 
 .drawer-header {
   padding: 50 16 16 16;
@@ -193,9 +192,8 @@ export default {
 }
 
 .logo {
-        margin-bottom: 12;
-        height: 90;
-        font-weight: bold;
-
-    }
+  margin-bottom: 12;
+  height: 90;
+  font-weight: bold;
+}
 </style>
