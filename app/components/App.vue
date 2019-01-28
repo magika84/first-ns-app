@@ -67,8 +67,6 @@
                   </v-template>
                 </ListView>
 
-                //  Add Input line for testing
-
 
                 // Add Speak Icon
                 <Label :text="'fa-commenting' | fonticon" class="fa h1" textAlignment="center" @tap="onPlayTap"/>
