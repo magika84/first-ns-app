@@ -1,4 +1,4 @@
-<script src="http://localhost:8098"></script>
+//<script src="http://localhost:8098"></script>
 <template>
   <Page>// Action bar
     <ActionBar class="action-bar">
@@ -67,9 +67,13 @@
                   </v-template>
                 </ListView>
 
+                //  Add Input line for testing
+
+
                 // Add Speak Icon
                 <Label :text="'fa-commenting' | fonticon" class="fa h1" textAlignment="center" @tap="onPlayTap"/>
-                <Button text="Load" @tap="load" class="btn btn-primary"/>
+   
+                <Button text="Load Airport" @tap="load" class="btn btn-primary"/>
                 // testing to get data from database
                 
                 <ListView for="airport in $store.state.data" class="list-group">
@@ -96,7 +100,11 @@ export default {
       this.$store.dispatch("insert", this.input);
     },
     load() {
-      this.$store.dispatch("query");
+      //this.$store.dispatch("query");
+      this.$store.dispatch("query").then(() => {
+      this.airports = this.$store.getters.allAirports;
+      console.log(this.airports);
+  }); 
       console.log("Pressed load button");
     },
     clear() {

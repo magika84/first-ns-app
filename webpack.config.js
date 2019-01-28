@@ -220,6 +220,7 @@ module.exports = env => {
                 { from: "fonts/**" },
                 { from: "**/*.+(jpg|png)" },
                 { from: "assets/**/*" },
+                { from: "**/*.db" },
             ], { ignore: [`${relative(appPath, appResourcesFullPath)}/**`] }),
             // Generate a bundle starter script and activate it in package.json
             new nsWebpack.GenerateBundleStarterPlugin([
@@ -266,3 +267,4 @@ module.exports = env => {
 
     return config;
 };
+
