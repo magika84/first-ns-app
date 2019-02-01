@@ -77,7 +77,7 @@
             // third page - Custom page
             <TabViewItem class="fa h3" :title="'fa-commenting-o' | fonticon">
               <StackLayout dock="top" height="90%" width="100%">
-                <ListView for="customPgItem in customPgItems" @itemTap="$navigateTo(airportlistpage)">
+                <ListView for="customPgItem in customPgItems" @itemTap="onCustomItemTap">
                   <v-template>
                     <CardView class="cardStyle" elevation="40" radius="10">
                       <StackLayout class="cardContent"> 
@@ -87,19 +87,7 @@
                     </CardView>
                   </v-template>
                 </ListView>
-                // Add Speak Icon
-                <Label :text="'fa-commenting' | fonticon" class="fa h1" textAlignment="center" @tap="onPlayTap"/>
-
-                <Button text="Load Airport" @tap="load" class="btn btn-primary"/>
-
-                // testing to get data from database
-                <ListView for="airport in $store.state.data" class="list-group">
-                  <v-template>
-                    <StackLayout class="list-group=item">
-                      <Label v-bind:text="airport.faaID + ' ' + airport.airportName"/>
-                    </StackLayout>
-                  </v-template>
-                </ListView>
+                
               </StackLayout>
             </TabViewItem>
           </TabView>
@@ -115,9 +103,6 @@ import AirportList from "./AirportList";
 export default {
   components: { AirportList },
   methods: {
-    alert(args){
-      alert(args);
-    },
     save() {
       this.$store.dispatch("insert", this.input);
     },
@@ -133,12 +118,12 @@ export default {
       this.input.faaID = "";
       this.input.airportName = "";
     },
-  /*  onButtonTap() {
+     onButtonTap() {
       if (this.textFieldValue === "") return; // Prevents users from entering an empty string.
       console.log("New task added: " + this.textFieldValue + "."); // Logs the newly added task in the console for debugging.
       this.scripts.unshift({ name: this.textFieldValue }); // Adds tasks in the ToDo array. Newly added tasks are immediately shown on the screen.
       this.textFieldValue = ""; // Clears the text field so that users can start adding new tasks immediately.
-    }, */
+    }, 
     onHomeItemTap: function(args) {
       console.log("Item on home page with index: " + args.index + " tapped");
     },
@@ -147,6 +132,11 @@ export default {
     },
     onCustomItemTap: function(args) {
       console.log("Item on custom page with index: " + args.index + " tapped");
+      if (args.index == 0){
+        this.$navigateTo(AirportList, {
+          animated: false
+        });
+      }
     },
     onPlayTap: function(args) {
       console.log("Play icon tapped!");

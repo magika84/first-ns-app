@@ -43,8 +43,6 @@ const store = new Vuex.Store({
     init(state, data) {
       state.database = data.database;
       console.log("state.database", state.database);
-      
-
     },
     load(state, data) {
     console.log("entering load in mutation ", data.data.length);
@@ -72,7 +70,6 @@ const store = new Vuex.Store({
         if (!Sqlite.exists("pilotvoice.db")){
             console.log("copying Database");
             Sqlite.copyDatabase("pilotvoice.db");
-            console.log("successfully copy db2");
         } 
         console.log("Checked for existing database - passed");
 

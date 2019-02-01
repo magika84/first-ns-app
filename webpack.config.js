@@ -62,7 +62,10 @@ module.exports = env => {
     const config = {
         mode: mode,
         context: appFullPath,
-        externals,
+        externals: {
+            'nativescript-sqlite-commercial': 'nativescript-sqlite-commercial',
+            'nativescript-sqlite-encrypted': 'nativescript-sqlite-encrypted',
+        },
         watchOptions: {
             ignored: [
                 appResourcesFullPath,
