@@ -10,16 +10,21 @@
 .fa {
     font-family: FontAwesome;
 }
-/*.h1 {
-    size: 120
-}
-.h2 {
-    color: white;
-}*/
+
 .navItem{
 	width:24%;
 	text-align: center;
 }
 
+.cardStyle {
+    background-color: rgb(223, 217, 217);
+    color: rgb(43, 43, 43);
+}
+
+.cardContent {
+    padding: 20;
+    font-weight: bold;
+    font-size: 16;
+}
 // Global SCSS styling
 // @see https://docs.nativescript.org/ui/styling

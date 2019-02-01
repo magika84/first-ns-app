@@ -1,8 +1,9 @@
 import Vue from 'nativescript-vue'
 import App from './components/App'
-//import VueDevtools from 'nativescript-vue-devtools'
+import VueDevtools from 'nativescript-vue-devtools'
 import Vuex from 'vuex';
 import {TNSFontIcon, fonticon} from 'nativescript-fonticon';
+Vue.registerElement('CardView', () => require('nativescript-cardview').CardView);
 
 
 TNSFontIcon.debug = true;
@@ -14,9 +15,9 @@ TNSFontIcon.loadCss();
 
 Vue.filter('fonticon', fonticon);
 
-/*if(TNS_ENV !== 'production') {
+if(TNS_ENV !== 'production') {
   Vue.use(VueDevtools)
-}*/
+}
 // Prints Vue logs when --env.production is *NOT* set while building
 Vue.config.silent = (TNS_ENV === 'production')
 
@@ -74,14 +75,7 @@ const store = new Vuex.Store({
             console.log("successfully copy db2");
         } 
         console.log("Checked for existing database - passed");
-       /* var db_promise = new Sqlite("pilotvoice.db", function(err, db) {
-            if (err) {
-              console.error("We failed to open database", err);
-            } else {
-              // This should ALWAYS be true, db object is open in the "Callback" if no errors occurred
-              console.log("Are we open yet (Inside Callback)? ", db.isOpen() ? "Yes" : "No"); // Yes
-            }
-        });*/
+
         (new Sqlite("pilotvoice.db")).then(db => {
           db.execSQL("CREATE TABLE IF NOT EXISTS airportTable (faaID TEXT UNIQUE PRIMARY KEY, airportName TEXT)").then(id => {
               context.commit("init", { database: db });
