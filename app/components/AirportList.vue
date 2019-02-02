@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     //onAirportNameTap: function(args) {
-      onAirportNameTap(args) {
+    onAirportNameTap(args) {
       alert(args.index + " " + this.airports[args.index].airportName + " " + args);
     },
     load() {

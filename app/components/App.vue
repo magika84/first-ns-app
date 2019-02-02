@@ -141,9 +141,7 @@ export default {
       console.log("Item on pretext page with index: " + args.index + " tapped");
     },
     onCustomItemTap: function(args) {
-      console.log("Item on custom page with index: " + args.index + " tapped");
       this.$navigateTo(AirportList);
-     
     },
     onPlayTap: function(args) {
       console.log("Play icon tapped!");
