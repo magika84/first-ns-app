@@ -77,16 +77,25 @@
             // third page - Custom page
             <TabViewItem class="fa h3" :title="'fa-commenting-o' | fonticon">
               <StackLayout dock="top" height="90%" width="100%">
-                <ListView for="customPgItem in customPgItems" @itemTap="onCustomItemTap">
-                  <v-template>
+              
                     <CardView class="cardStyle" elevation="40" radius="10">
-                      <StackLayout class="cardContent"> 
-                        <Label textWrap="true" :text="customPgItem.line"/>
-                        <Label v-model="name"/>
+                      <StackLayout class="cardContent"  > 
+                        <Label textWrap="true" text="Airport Name:"/>
+                        <TextField :text="SelectedAirportName" hint="Tap to Select" editable="false" @tap="onCustomItemTap"/>
                       </StackLayout>
                     </CardView>
-                  </v-template>
-                </ListView>
+                    <CardView class="cardStyle" elevation="40" radius="10">
+                      <StackLayout class="cardContent"> 
+                        <Label textWrap="true" text="Aircraft:"/>
+                        <Label text="name"/>
+                      </StackLayout>
+                    </CardView>
+                    <CardView class="cardStyle" elevation="40" radius="10">
+                      <StackLayout class="cardContent"> 
+                        <Label textWrap="true" text="Action:"/>
+                        <Label text="name"/>
+                      </StackLayout>
+                    </CardView>
                 
               </StackLayout>
             </TabViewItem>
@@ -102,6 +111,7 @@ import AirportList from "./AirportList";
 
 export default {
   components: { AirportList },
+  props: ["SelectedAirportName"],
   methods: {
     save() {
       this.$store.dispatch("insert", this.input);
@@ -132,11 +142,8 @@ export default {
     },
     onCustomItemTap: function(args) {
       console.log("Item on custom page with index: " + args.index + " tapped");
-      if (args.index == 0){
-        this.$navigateTo(AirportList, {
-          animated: false
-        });
-      }
+      this.$navigateTo(AirportList);
+     
     },
     onPlayTap: function(args) {
       console.log("Play icon tapped!");
