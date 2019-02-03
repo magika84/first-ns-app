@@ -26,7 +26,7 @@
 
 <script>
 export default {
-  props: ["airportName"],
+  props: ["id"],
   data() {
     return {
         faaID: "",
@@ -36,7 +36,8 @@ export default {
   methods: {
     //onAirportNameTap: function(args) {
     onAirportNameTap(args) {
-      alert(args.index + " " + this.airports[args.index].airportName + " " + args);
+     // const selectedairport
+        alert(args.index + " " + args.item.faaID + " " +  args.item.airportName);
     },
     load() {
       //this.$store.dispatch("query");

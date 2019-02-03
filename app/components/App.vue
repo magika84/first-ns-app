@@ -81,19 +81,19 @@
                     <CardView class="cardStyle" elevation="40" radius="10">
                       <StackLayout class="cardContent"  > 
                         <Label textWrap="true" text="Airport Name:"/>
-                        <TextField :text="SelectedAirportName" hint="Tap to Select" editable="false" @tap="onCustomItemTap"/>
+                        <TextField v-bind:text="SelectedAirportName" hint="Tap to Select" editable="false" @tap="onCustomItemTap"/>
                       </StackLayout>
                     </CardView>
                     <CardView class="cardStyle" elevation="40" radius="10">
                       <StackLayout class="cardContent"> 
                         <Label textWrap="true" text="Aircraft:"/>
-                        <Label text="name"/>
+                         <TextField hint="Tap to Select" editable="false"/>
                       </StackLayout>
                     </CardView>
                     <CardView class="cardStyle" elevation="40" radius="10">
                       <StackLayout class="cardContent"> 
                         <Label textWrap="true" text="Action:"/>
-                        <Label text="name"/>
+                        <TextField hint="Tap to Select" editable="false"/>
                       </StackLayout>
                     </CardView>
                 
@@ -111,7 +111,6 @@ import AirportList from "./AirportList";
 
 export default {
   components: { AirportList },
-  props: ["SelectedAirportName"],
   methods: {
     save() {
       this.$store.dispatch("insert", this.input);
@@ -140,8 +139,10 @@ export default {
     onPretextItemTap: function(args) {
       console.log("Item on pretext page with index: " + args.index + " tapped");
     },
-    onCustomItemTap: function(args) {
-      this.$navigateTo(AirportList);
+    onCustomItemTap() {
+      const newId = new Date().getTime();
+      this.$showModal(AirportList, { props: { id : newId }, fullscreen: true });
+      
     },
     onPlayTap: function(args) {
       console.log("Play icon tapped!");
@@ -169,6 +170,7 @@ export default {
         faaID: "",
         airportName: ""
       },
+      airportName: "",
       scripts: [],
       textFieldValue: "",
       items: [
@@ -177,17 +179,6 @@ export default {
         },
         {
           line: "Approaching Script:"
-        }
-      ],
-      customPgItems: [
-        {
-          line: "Airport Name:"
-        },
-        {
-          line: "Aircraft ID"
-        },
-        {
-          line: "Action"
         }
       ]
     };
