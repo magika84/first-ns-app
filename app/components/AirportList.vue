@@ -37,10 +37,10 @@ export default {
   methods: {
     //onAirportNameTap: function(args) {
     onAirportNameTap(args) {
-      this.airportsource.airportName = args.item.airportName;
-      this.navigateBack();
+      //this.airportsource.airportName = args.item.airportName;
+      //this.navigateBack();
        // alert(args.index + " " + args.item.faaID + " " +  args.item.airportName);
-       //this.$modal.close(args.item.airportName);
+       this.$modal.close(args.item);
 
     },
     load() {

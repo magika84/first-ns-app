@@ -134,16 +134,18 @@ export default {
       console.log("Item on pretext page with index: " + args.index + " tapped");
     },
     onCustomItemTap: function(args) {
-      //const newId = new Date().getTime();
+      const newId = new Date().getTime();
+      
       //const airportsource = "";
-      //this.$showModal(AirportList, { props: { id : newId }, fullscreen: true }).then(data => console.log(data));
+      this.$showModal(AirportList, { props: { id : newId }, fullscreen: true }).then(data => console.log(data.airportName));
+      //console.log(data);
       //this.SelectedAirportName = this.data;
-      this.$navigateTo(AirportList, { 
+      /*this.$navigateTo(AirportList, { 
         props: {
           source: this.source
         }
       });
-      console.log(source);
+      console.log(source);*/
     },
     onPlayTap: function(args) {
       console.log("Play icon tapped!");
