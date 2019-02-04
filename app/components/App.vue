@@ -1,4 +1,4 @@
-<script src="http://localhost:8098"></script>
+<script src="http://192.168.1.176:8098"></script>
 <template>
   <Page>// Action bar
     <ActionBar class="action-bar">
@@ -27,7 +27,7 @@
             <TabViewItem class="fa h3" :title="'fa-plane' | fonticon">
               <StackLayout dock="top" height="90%" width="100%">
                 <Image class="logo" src="~/assets/images/logo.png"></Image>
-                <ListView class="fa list-group" for="item in items" @itemTap="onHomeItemTap">
+                <ListView class="fa list-group" for="item in items">
                   <v-template>
                     <StackLayout class="fa list-group-item">
                       <Label textWrap="true" :text="item.line" class="list-group-item-heading"/>
@@ -81,7 +81,7 @@
                     <CardView class="cardStyle" elevation="40" radius="10">
                       <StackLayout class="cardContent"  > 
                         <Label textWrap="true" text="Airport Name:"/>
-                        <TextField v-bind:text="SelectedAirportName" hint="Tap to Select" editable="false" @tap="onCustomItemTap"/>
+                        <TextField :text="SelectedAirportName" hint="Tap to Select" editable="false" @tap="onCustomItemTap"/>
                       </StackLayout>
                     </CardView>
                     <CardView class="cardStyle" elevation="40" radius="10">
@@ -110,7 +110,8 @@
 import AirportList from "./AirportList";
 
 export default {
-  components: { AirportList },
+//  components: { AirportList },
+  props: ["source"],
   methods: {
     save() {
       this.$store.dispatch("insert", this.input);
@@ -121,56 +122,36 @@ export default {
         this.airports = this.$store.getters.allAirports;
         console.log(this.airports);
       });
-      console.log("Pressed load button");
+
     },
-    clear() {
-      this.input.faaID = "";
-      this.input.airportName = "";
-    },
-     onButtonTap() {
+    onButtonTap() {
       if (this.textFieldValue === "") return; // Prevents users from entering an empty string.
       console.log("New task added: " + this.textFieldValue + "."); // Logs the newly added task in the console for debugging.
       this.scripts.unshift({ name: this.textFieldValue }); // Adds tasks in the ToDo array. Newly added tasks are immediately shown on the screen.
       this.textFieldValue = ""; // Clears the text field so that users can start adding new tasks immediately.
     }, 
-    onHomeItemTap: function(args) {
-      console.log("Item on home page with index: " + args.index + " tapped");
-    },
     onPretextItemTap: function(args) {
       console.log("Item on pretext page with index: " + args.index + " tapped");
     },
-    onCustomItemTap() {
-      const newId = new Date().getTime();
-      this.$showModal(AirportList, { props: { id : newId }, fullscreen: true });
-      
+    onCustomItemTap: function(args) {
+      //const newId = new Date().getTime();
+      //const airportsource = "";
+      //this.$showModal(AirportList, { props: { id : newId }, fullscreen: true }).then(data => console.log(data));
+      //this.SelectedAirportName = this.data;
+      this.$navigateTo(AirportList, { 
+        props: {
+          source: this.source
+        }
+      });
+      console.log(source);
     },
     onPlayTap: function(args) {
       console.log("Play icon tapped!");
       alert("Play icon tapped! ");
     },
-    pretextsTap() {
-      console.log("pretexts tapped!");
-      this.$navigateTo(PreTexts, {
-        animated: false,
-        clearHistory: true
-      });
-    },
-    customTap() {
-      console.log("custom tapped!");
-      this.$navigateTo(CustomScript, {
-        animated: false,
-        clearHistory: true
-      });
-    }
   },
   data() {
     return {
-      airportlistpage: AirportList,
-      input: {
-        faaID: "",
-        airportName: ""
-      },
-      airportName: "",
       scripts: [],
       textFieldValue: "",
       items: [

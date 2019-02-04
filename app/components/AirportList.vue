@@ -26,18 +26,22 @@
 
 <script>
 export default {
-  props: ["id"],
+  props: ["airportsource"],
   data() {
-    return {
+     return {
         faaID: "",
-        airportName: ""
+        airportName: "",
+        airportsource: ""
     }
   },
   methods: {
     //onAirportNameTap: function(args) {
     onAirportNameTap(args) {
-     // const selectedairport
-        alert(args.index + " " + args.item.faaID + " " +  args.item.airportName);
+      this.airportsource.airportName = args.item.airportName;
+      this.navigateBack();
+       // alert(args.index + " " + args.item.faaID + " " +  args.item.airportName);
+       //this.$modal.close(args.item.airportName);
+
     },
     load() {
       //this.$store.dispatch("query");
