@@ -81,7 +81,7 @@
                     <CardView class="cardStyle" elevation="40" radius="10">
                       <StackLayout class="cardContent"  > 
                         <Label textWrap="true" text="Airport Name:"/>
-                        <TextField :text="SelectedAirportName" hint="Tap to Select" editable="false" @tap="onCustomItemTap"/>
+                        <TextField :text="SelectedAirport.airportName" hint="Tap to Select" editable="false" @tap="onCustomItemTap"/>
                       </StackLayout>
                     </CardView>
                     <CardView class="cardStyle" elevation="40" radius="10">
@@ -137,7 +137,8 @@ export default {
       const newId = new Date().getTime();
       
       //const airportsource = "";
-      this.$showModal(AirportList, { props: { id : newId }, fullscreen: true }).then(data => console.log(data.airportName));
+      this.$showModal(AirportList, { props: { id : newId }, fullscreen: true }).then(data => this.SelectedAirport.airportName = data.airportName);
+      
       //console.log(data);
       //this.SelectedAirportName = this.data;
       /*this.$navigateTo(AirportList, { 
@@ -154,6 +155,10 @@ export default {
   },
   data() {
     return {
+      SelectedAirport: {
+        faaID: "",
+        airportName: ""
+      },
       scripts: [],
       textFieldValue: "",
       items: [
