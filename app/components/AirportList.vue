@@ -1,5 +1,5 @@
 <template>
-    <Page @loaded="load" >
+    <Page  >
         <ActionBar title="Airport list" class="action-bar"/>
 
 

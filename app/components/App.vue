@@ -1,6 +1,6 @@
 <script src="http://192.168.1.176:8098"></script>
 <template>
-  <Page>// Action bar
+  <Page @loaded="load">// Action bar
     <ActionBar class="action-bar">
       <GridLayout width="100%" columns="auto, *">
         <Label
@@ -137,7 +137,7 @@ export default {
       const newId = new Date().getTime();
       
       //const airportsource = "";
-      this.$showModal(AirportList, { props: { id : newId }, fullscreen: true }).then(data => this.SelectedAirport.airportName = data.airportName);
+      this.$showModal(AirportList, { props: { id : newId }, fullscreen: true }).then(data => this.SelectedAirport = data);
       
       //console.log(data);
       //this.SelectedAirportName = this.data;

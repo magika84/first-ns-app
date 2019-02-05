@@ -60,7 +60,7 @@ const store = new Vuex.Store({
           faaID: data.data.faaID,
           airportName: data.data.airportName
       });
-      console.log("In save section inside mutation");
+      //console.log("In save section inside mutation");
     },
    },
   actions: {
@@ -84,15 +84,15 @@ const store = new Vuex.Store({
             console.log("OPEN DB ERROR", error);
         });
         
-  },
-  insert(context, data) {
+    },
+    insert(context, data) {
       context.state.database.execSQL("INSERT INTO airportTable (faaID, airportName) VALUES (?, ?)", [data.faaID, data.airportName]).then(id => {
           context.commit("save", { data: data });
       }, error => {
           console.log("INSERT ERROR", error);
       }); 
-  },
-  query(context) {
+    },
+    query(context) {
       console.log("Action section: Entering Query");
       context.state.database.all("SELECT faaID, airportName FROM airportTable", []).then(result => {
           context.commit("load", { data: result });
@@ -100,8 +100,8 @@ const store = new Vuex.Store({
       }, error => {
           console.log("SELECT ERROR", error);
       });
-  }
-   }
+    }
+    }
 });
 
 Vue.prototype.$store = store;
