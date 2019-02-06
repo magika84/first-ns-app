@@ -35,16 +35,20 @@ const store = new Vuex.Store({
     data: []
   },
   getters: {
-    allAirports(state, getters) {
+    allAircrafts(state, getters) {
         return state.data;
     },
+    allAirports(state, getters) {
+        return state.data;
+    }
+
 },
   mutations: {
     init(state, data) {
       state.database = data.database;
       console.log("state.database", state.database);
     },
-    load(state, data) {
+    muloadAirports(state, data) {
     console.log("entering load in mutation ", data.data.length);
       state.data = [];
       for(var i = 0; i < data.data.length; i++) {
@@ -55,6 +59,17 @@ const store = new Vuex.Store({
           });
       }
     },
+    muloadAircrafts(state, data) {
+        console.log("entering load in mutation ", data.data.length);
+          state.data = [];
+          for(var i = 0; i < data.data.length; i++) {
+              state.data.push({
+                  Nnumber: data.data[i][0],
+                  aircraftName: data.data[i][1]
+                  
+              });
+          }
+        },
     save(state, data) {
       state.data.push({
           faaID: data.data.faaID,
@@ -76,12 +91,20 @@ const store = new Vuex.Store({
         (new Sqlite("pilotvoice.db")).then(db => {
           db.execSQL("CREATE TABLE IF NOT EXISTS airportTable (faaID TEXT UNIQUE PRIMARY KEY, airportName TEXT)").then(id => {
               context.commit("init", { database: db });
-              console.log("CREATE TABLE SECTION", db);
+              console.log("CREATE airportTable TABLE SECTION", db);
           }, error => {
-              console.log("CREATE TABLE ERROR", error);
+              console.log("CREATE airportTable TABLE ERROR", error);
           });
         }, error => {
             console.log("OPEN DB ERROR", error);
+        db.execSQL("CREATE TABLE IF NOT EXISTS aircraftTable (Nnumber TEXT UNIQUE PRIMARY KEY, aircraftName TEXT)").then(id => {
+                context.commit("init", { database: db });
+                console.log("CREATE aircraftTable TABLE SECTION", db);
+            }, error => {
+                console.log("CREATE aircraftTable TABLE ERROR", error);
+            });
+          }, error => {
+              console.log("OPEN DB ERROR", error);
         });
         
     },
@@ -92,16 +115,25 @@ const store = new Vuex.Store({
           console.log("INSERT ERROR", error);
       }); 
     },
-    query(context) {
+    queryAirports(context) {
       console.log("Action section: Entering Query");
       context.state.database.all("SELECT faaID, airportName FROM airportTable", []).then(result => {
-          context.commit("load", { data: result });
+          context.commit("muloadAirports", { data: result });
       console.log("Action section: completed query - ", result);
       }, error => {
           console.log("SELECT ERROR", error);
       });
+    },
+   queryAircrafts(context){
+        context.state.database.all("SELECT Nnumber, aircraftName FROM aircraftTable", []).then(result => {
+            context.commit("muloadAircrafts", { data: result });
+        }, error => {
+            console.log("SELECT ERROR", error);
+        });
     }
+
     }
+
 });
 
 Vue.prototype.$store = store;

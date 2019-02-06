@@ -1,6 +1,6 @@
 <script src="http://192.168.1.176:8098"></script>
 <template>
-  <Page @loaded="load">// Action bar
+  <Page >// Action bar
     <ActionBar class="action-bar">
       <GridLayout width="100%" columns="auto, *">
         <Label
@@ -81,13 +81,13 @@
                     <CardView class="cardStyle" elevation="40" radius="10">
                       <StackLayout class="cardContent"  > 
                         <Label textWrap="true" text="Airport Name:"/>
-                        <TextField :text="SelectedAirport.airportName" hint="Tap to Select" editable="false" @tap="onCustomItemTap"/>
+                        <TextField :text="SelectedAirport.airportName" hint="Tap to Select" editable="false" @tap="onCustomArprtTap"/>
                       </StackLayout>
                     </CardView>
                     <CardView class="cardStyle" elevation="40" radius="10">
                       <StackLayout class="cardContent"> 
                         <Label textWrap="true" text="Aircraft:"/>
-                         <TextField hint="Tap to Select" editable="false"/>
+                         <TextField :text="SelectedAirport.aircraftName" hint="Tap to Select" editable="false" @tap="onCustomArcrftTap"/>
                       </StackLayout>
                     </CardView>
                     <CardView class="cardStyle" elevation="40" radius="10">
@@ -96,6 +96,7 @@
                         <TextField hint="Tap to Select" editable="false"/>
                       </StackLayout>
                     </CardView>
+                    
                 
               </StackLayout>
             </TabViewItem>
@@ -108,22 +109,15 @@
 
 <script>
 import AirportList from "./AirportList";
+import AircraftList from "./AircraftList"
 
 export default {
-//  components: { AirportList },
-  props: ["source"],
+
   methods: {
     save() {
       this.$store.dispatch("insert", this.input);
     },
-    load() {
-      //this.$store.dispatch("query");
-      this.$store.dispatch("query").then(() => {
-        this.airports = this.$store.getters.allAirports;
-        console.log(this.airports);
-      });
-
-    },
+    
     onButtonTap() {
       if (this.textFieldValue === "") return; // Prevents users from entering an empty string.
       console.log("New task added: " + this.textFieldValue + "."); // Logs the newly added task in the console for debugging.
@@ -133,20 +127,19 @@ export default {
     onPretextItemTap: function(args) {
       console.log("Item on pretext page with index: " + args.index + " tapped");
     },
-    onCustomItemTap: function(args) {
+    onCustomArprtTap: function(args) {
       const newId = new Date().getTime();
       
-      //const airportsource = "";
+      console.log(args);
       this.$showModal(AirportList, { props: { id : newId }, fullscreen: true }).then(data => this.SelectedAirport = data);
       
-      //console.log(data);
-      //this.SelectedAirportName = this.data;
-      /*this.$navigateTo(AirportList, { 
-        props: {
-          source: this.source
-        }
-      });
-      console.log(source);*/
+    },
+    onCustomArcrftTap: function(args) {
+      const newId = new Date().getTime();
+      
+      console.log(args);
+      this.$showModal(AircraftList, { props: { id : newId }, fullscreen: true }).then(data => this.SelectedAircraft = data);
+      
     },
     onPlayTap: function(args) {
       console.log("Play icon tapped!");

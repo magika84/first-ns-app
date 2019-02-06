@@ -1,5 +1,5 @@
 <template>
-    <Page @loaded="loadAirports">
+    <Page @loaded="loadAircrafts" >
         <ActionBar title="Airport list" class="action-bar"/>
 
 
@@ -8,11 +8,11 @@
         <StackLayout width="95%" marginTop="15" borderRadius="5" paddingTop="5">
 
                 
-                <ListView for="airport in $store.state.data" class="list-group" @itemTap="onAirportNameTap">
+                <ListView for="aircraft in $store.state.data" class="list-group" @itemTap="onAircraftNameTap">
                   <v-template>
                     <GridLayout columns="auto,*" rows="*, *" paddingLeft="10" paddingTop="5" paddingBottom="5" paddingRight="5">
                       <StackLayout width="95%" marginTop="15" borderRadius="5" paddingTop="5"  class="list-group-item">
-                        <Label v-bind:text="airport.faaID + ' ' + airport.airportName" class="list-group-item-heading"/>
+                        <Label v-bind:text="aircraft.Nnumber + ' ' + aircraft.aircraftName" class="list-group-item-heading"/>
                       </StackLayout>
                     </GridLayout>
                   </v-template>
@@ -26,38 +26,35 @@
 
 <script>
 export default {
-  //props: ["airportsource"],
+
   data() {
      return {
         faaID: "",
-        airportName: ""
-     //   airportsource: ""
+        airportName: "",
+       
     }
   },
   methods: {
-    loadAirports() {
+
+
+    loadAircrafts() {
       //this.$store.dispatch("query");
-      this.$store.dispatch("queryAirports").then(() => {
-        this.airports = this.$store.getters.allAirports;
-        console.log(this.airports);
+      console.log("Calling loadAircrafts")
+      this.$store.dispatch("queryAircrafts").then(() => {
+        this.aircrafts = this.$store.getters.allAircrafts;
+        console.log(this.aircrafts);
       });
 
     },
     //onAirportNameTap: function(args) {
-    onAirportNameTap(args) {
+    onAircraftNameTap(args) {
       //this.airportsource.airportName = args.item.airportName;
       //this.navigateBack();
        // alert(args.index + " " + args.item.faaID + " " +  args.item.airportName);
        this.$modal.close(args.item);
 
     }
-  /*  load() {
-      //this.$store.dispatch("query");
-      this.$store.dispatch("queryAirports").then(() => {
-        this.airports = this.$store.getters.allAirports;
-        console.log(this.airports);
-      });
-    }*/
+
 
   }
 };
