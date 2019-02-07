@@ -26,12 +26,10 @@
 
 <script>
 export default {
-  //props: ["airportsource"],
   data() {
      return {
         faaID: "",
         airportName: ""
-     //   airportsource: ""
     }
   },
   methods: {

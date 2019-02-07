@@ -12,7 +12,7 @@
                   <v-template>
                     <GridLayout columns="auto,*" rows="*, *" paddingLeft="10" paddingTop="5" paddingBottom="5" paddingRight="5">
                       <StackLayout width="95%" marginTop="15" borderRadius="5" paddingTop="5"  class="list-group-item">
-                        <Label v-bind:text="aircraft.Nnumber + ' ' + aircraft.aircraftName" class="list-group-item-heading"/>
+                        <Label v-bind:text="aircraft.aircraftnumber + ' ' + aircraft.aircraftName" class="list-group-item-heading"/>
                       </StackLayout>
                     </GridLayout>
                   </v-template>
@@ -42,7 +42,8 @@ export default {
       console.log("Calling loadAircrafts")
       this.$store.dispatch("queryAircrafts").then(() => {
         this.aircrafts = this.$store.getters.allAircrafts;
-        console.log(this.aircrafts);
+        console.log("this.$store.getters.allAircrafts is ", this.$store.getters.allAircrafts);
+        console.log("this.aircrafts is ", this.aircrafts);
       });
 
     },

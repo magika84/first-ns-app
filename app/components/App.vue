@@ -87,7 +87,7 @@
                     <CardView class="cardStyle" elevation="40" radius="10">
                       <StackLayout class="cardContent"> 
                         <Label textWrap="true" text="Aircraft:"/>
-                         <TextField :text="SelectedAirport.aircraftName" hint="Tap to Select" editable="false" @tap="onCustomArcrftTap"/>
+                         <TextField :text="SelectedAircraft.aircraftName" hint="Tap to Select" editable="false" @tap="onCustomArcrftTap"/>
                       </StackLayout>
                     </CardView>
                     <CardView class="cardStyle" elevation="40" radius="10">
@@ -137,7 +137,7 @@ export default {
     onCustomArcrftTap: function(args) {
       const newId = new Date().getTime();
       
-      console.log(args);
+      //console.log(args);
       this.$showModal(AircraftList, { props: { id : newId }, fullscreen: true }).then(data => this.SelectedAircraft = data);
       
     },
@@ -150,6 +150,10 @@ export default {
     return {
       SelectedAirport: {
         faaID: "",
+        airportName: ""
+      },
+      SelectedAircraft: {
+        aircraftnumber: "",
         airportName: ""
       },
       scripts: [],

@@ -36,9 +36,11 @@ const store = new Vuex.Store({
   },
   getters: {
     allAircrafts(state, getters) {
+        
         return state.data;
     },
     allAirports(state, getters) {
+       
         return state.data;
     }
 
@@ -60,15 +62,16 @@ const store = new Vuex.Store({
       }
     },
     muloadAircrafts(state, data) {
-        console.log("entering load in mutation ", data.data.length);
+        console.log("calling muloadAircrafts in mutation ", data.data.length);
           state.data = [];
           for(var i = 0; i < data.data.length; i++) {
               state.data.push({
-                  Nnumber: data.data[i][0],
+                  aircraftnumber: data.data[i][0],
                   aircraftName: data.data[i][1]
                   
               });
           }
+          console.log("state.data is: ", state.data);
         },
     save(state, data) {
       state.data.push({
@@ -91,13 +94,15 @@ const store = new Vuex.Store({
         (new Sqlite("pilotvoice.db")).then(db => {
           db.execSQL("CREATE TABLE IF NOT EXISTS airportTable (faaID TEXT UNIQUE PRIMARY KEY, airportName TEXT)").then(id => {
               context.commit("init", { database: db });
+              confirm.log("id is: ", id);
               console.log("CREATE airportTable TABLE SECTION", db);
           }, error => {
               console.log("CREATE airportTable TABLE ERROR", error);
           });
         }, error => {
             console.log("OPEN DB ERROR", error);
-        db.execSQL("CREATE TABLE IF NOT EXISTS aircraftTable (Nnumber TEXT UNIQUE PRIMARY KEY, aircraftName TEXT)").then(id => {
+            
+        db.execSQL("CREATE TABLE IF NOT EXISTS aircraftTable (aircraftnumber TEXT UNIQUE PRIMARY KEY, aircraftName TEXT)").then(id => {
                 context.commit("init", { database: db });
                 console.log("CREATE aircraftTable TABLE SECTION", db);
             }, error => {
@@ -116,7 +121,7 @@ const store = new Vuex.Store({
       }); 
     },
     queryAirports(context) {
-      console.log("Action section: Entering Query");
+      console.log("Action section: Entering Query Airports");
       context.state.database.all("SELECT faaID, airportName FROM airportTable", []).then(result => {
           context.commit("muloadAirports", { data: result });
       console.log("Action section: completed query - ", result);
@@ -125,7 +130,8 @@ const store = new Vuex.Store({
       });
     },
    queryAircrafts(context){
-        context.state.database.all("SELECT Nnumber, aircraftName FROM aircraftTable", []).then(result => {
+       console.log("Entering queryAircrafts and database is: " + context.state.database.all);
+        context.state.database.all("SELECT aircraftnumber, aircraftName FROM aircraftTable", []).then(result => {
             context.commit("muloadAircrafts", { data: result });
         }, error => {
             console.log("SELECT ERROR", error);
