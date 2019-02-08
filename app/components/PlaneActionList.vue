@@ -40,7 +40,7 @@ export default {
   methods: {
     
     onPlaneActionTap(args) {
-    
+
        // alert(args.index + " " + args.item.faaID + " " +  args.item.airportName);
        this.$modal.close(args.item);
 

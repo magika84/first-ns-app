@@ -23,27 +23,32 @@
       <StackLayout ~mainContent>
         <DockLayout>// Navigation tabs
           <TabView class="tab-view" androidTabsPosition="bottom">
-            // First page
+            // First Tab page
             <TabViewItem class="fa h3" :title="'fa-plane' | fonticon">
               <StackLayout dock="top" height="90%" width="100%">
                 <Image class="logo" src="~/assets/images/logo.png"></Image>
-                <ListView class="fa list-group" for="item in items">
+                <ListView for="item in items">
                   <v-template>
-                    <StackLayout class="fa list-group-item">
-                      <Label textWrap="true" :text="item.line" class="list-group-item-heading"/>
-                      <Label text="Tap to Select" class="list-group-item-text"/>
+                    <CardView class="cardStyle" elevation="40" radius="10">
+                    <StackLayout class="cardContent">
+                      <Label textWrap="true" :text="item.line" />
+                      <Label text="Tap to Select" />
                     </StackLayout>
+                    </CardView>
                   </v-template>
-                </ListView>// Add Play Icon
+                </ListView>
+                
+                // Add Play Icon
+                
                 <Label
                   :text="'fa-commenting' | fonticon"
-                  class="fa h1"
+                  class="h1"
                   textAlignment="center"
                   @tap="onPlayTap"
                 />
               </StackLayout>
             </TabViewItem>
-            // second page
+            // second Tab page
             <TabViewItem class="fa h3" :title="'fa-list' | fonticon">
               <StackLayout orientation="vertical" width="100%" height="100%">
                 <GridLayout columns="2*,*" rows="*" width="100%" height="10%">
@@ -87,7 +92,7 @@
                     <CardView class="cardStyle" elevation="40" radius="10">
                       <StackLayout class="cardContent"> 
                         <Label textWrap="true" text="Aircraft:"/>
-                         <TextField :text="SelectedAircraft.aircraftName" hint="Tap to Select" editable="false" @tap="onCustomArcrftTap"/>
+                         <TextField :text="SelectedAircraft.aircraftName + ' ' + SelectedAircraft.aircraftnumber" hint="Tap to Select" editable="false" @tap="onCustomArcrftTap"/>
                       </StackLayout>
                     </CardView>
                     <CardView class="cardStyle" elevation="40" radius="10">
@@ -96,7 +101,12 @@
                         <TextField :text="SelectedPlaneAction.line" hint="Tap to Select" editable="false" @tap="onCustomPlaneActnTap"/>
                       </StackLayout>
                     </CardView>
-                    
+                    <CardView class="cardStyle" elevation="40" radius="10">
+                      <StackLayout class="cardContent"> 
+                        <Label textWrap="true" text="Script:"/>
+                        <TextField text="Coming soon" hint="Nothing to see" editable="false" />
+                      </StackLayout>
+                    </CardView>                    
                 
               </StackLayout>
             </TabViewItem>
@@ -122,7 +132,7 @@ export default {
       },
       SelectedAircraft: {
         aircraftnumber: "",
-        airportName: ""
+        aircraftName: ""
       },
       SelectedPlaneAction: "",
       scripts: [],
