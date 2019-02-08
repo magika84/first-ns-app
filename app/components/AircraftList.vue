@@ -38,12 +38,10 @@ export default {
 
 
     loadAircrafts() {
-      //this.$store.dispatch("query");
-      console.log("Calling loadAircrafts")
+
       this.$store.dispatch("queryAircrafts").then(() => {
         this.aircrafts = this.$store.getters.allAircrafts;
-        console.log("this.$store.getters.allAircrafts is ", this.$store.getters.allAircrafts);
-        console.log("this.aircrafts is ", this.aircrafts);
+
       });
 
     },

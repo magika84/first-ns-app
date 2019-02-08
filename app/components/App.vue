@@ -93,7 +93,7 @@
                     <CardView class="cardStyle" elevation="40" radius="10">
                       <StackLayout class="cardContent"> 
                         <Label textWrap="true" text="Action:"/>
-                        <TextField hint="Tap to Select" editable="false"/>
+                        <TextField :text="SelectedPlaneAction.line" hint="Tap to Select" editable="false" @tap="onCustomPlaneActnTap"/>
                       </StackLayout>
                     </CardView>
                     
@@ -109,7 +109,8 @@
 
 <script>
 import AirportList from "./AirportList";
-import AircraftList from "./AircraftList"
+import AircraftList from "./AircraftList";
+import PlaneActionList from "./PlaneActionList";
 
 export default {
    data() {
@@ -123,19 +124,10 @@ export default {
         aircraftnumber: "",
         airportName: ""
       },
+      SelectedPlaneAction: "",
       scripts: [],
       textFieldValue: "",
-      planeActions: [
-        {
-          line: "downwind"
-        },
-        {
-          line: "base"
-        },
-        {
-          line: "final"
-        }
-      ],
+
       items: [
         {
           line: "Takeoff Script:"
@@ -172,6 +164,13 @@ export default {
       
       //console.log(args);
       this.$showModal(AircraftList, { props: { id : newId }, fullscreen: true }).then(data => this.SelectedAircraft = data);
+      
+    },
+    onCustomPlaneActnTap: function(args) {
+      const newId = new Date().getTime();
+
+      this.$showModal(PlaneActionList, { props: { id : newId } }).then(data => this.SelectedPlaneAction = data);
+
       
     },
     onPlayTap: function(args) {
