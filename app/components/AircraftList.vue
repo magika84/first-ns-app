@@ -47,10 +47,9 @@ export default {
       });
 
     },
-    //onAirportNameTap: function(args) {
+
     onAircraftNameTap(args) {
-      //this.airportsource.airportName = args.item.airportName;
-      //this.navigateBack();
+
        // alert(args.index + " " + args.item.faaID + " " +  args.item.airportName);
        this.$modal.close(args.item);
 

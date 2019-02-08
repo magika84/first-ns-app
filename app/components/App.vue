@@ -112,7 +112,40 @@ import AirportList from "./AirportList";
 import AircraftList from "./AircraftList"
 
 export default {
-
+   data() {
+    return {
+      SelectedAircraftLine: "",
+      SelectedAirport: {
+        faaID: "",
+        airportName: ""
+      },
+      SelectedAircraft: {
+        aircraftnumber: "",
+        airportName: ""
+      },
+      scripts: [],
+      textFieldValue: "",
+      planeActions: [
+        {
+          line: "downwind"
+        },
+        {
+          line: "base"
+        },
+        {
+          line: "final"
+        }
+      ],
+      items: [
+        {
+          line: "Takeoff Script:"
+        },
+        {
+          line: "Approaching Script:"
+        }
+      ]
+    };
+  },
   methods: {
     save() {
       this.$store.dispatch("insert", this.input);
@@ -145,29 +178,8 @@ export default {
       console.log("Play icon tapped!");
       alert("Play icon tapped! ");
     },
-  },
-  data() {
-    return {
-      SelectedAirport: {
-        faaID: "",
-        airportName: ""
-      },
-      SelectedAircraft: {
-        aircraftnumber: "",
-        airportName: ""
-      },
-      scripts: [],
-      textFieldValue: "",
-      items: [
-        {
-          line: "Takeoff Script:"
-        },
-        {
-          line: "Approaching Script:"
-        }
-      ]
-    };
   }
+ 
 };
 </script>
 
