@@ -126,6 +126,7 @@
 import AirportList from "./AirportList";
 import AircraftList from "./AircraftList";
 import PlaneActionList from "./PlaneActionList";
+//import PhoneticLetters from "../phoneticTable";
 
 export default {
    data() {
@@ -154,14 +155,42 @@ export default {
     };
   },
   computed: {
+    // Aircraft Name need to be before Aircraft Number for script purpose
     SelectedAircraftLine: function() {
+      this.speakIndividual(this.SelectedAircraft.aircraftnumber);
       return this.SelectedAircraft.aircraftName + " " + this.SelectedAircraft.aircraftnumber;
     },
+    // Creating a script line
     CustomScriptLine: function() {
       return this.SelectedAirport.airportName + " Traffic, " + this.SelectedAircraft.aircraftName + " " + this.SelectedAircraft.aircraftnumber + ", " + this.SelectedPlaneAction.line + ", " + this.SelectedAirport.airportName;
-    }
+    },
+    // Separate input into c such as Aircraft number and heading 
+
   },
   methods: {
+    speakIndividual: function(inputtxt)
+    { 
+      var letters = /^[A-Za-z]+$/;
+      var j, IndvdlCharLine;
+
+      for( j = 0; j < inputtxt.length; j++){
+        if (letters.test(inputtxt[j]))
+          console.log("This character is Letter: " +inputtxt[j]);
+        else
+          console.log("This character is Number: " +inputtxt[j]);
+      };
+
+  /*    if(inputtxt.value.match(letters))
+      {
+        alert('Your name have accepted : you can try another');
+        return true;
+      }
+      else
+      {
+        alert('Please input alphabet characters only');
+        return false;
+      }*/
+      },
     save() {
       this.$store.dispatch("insert", this.input);
     },

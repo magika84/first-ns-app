@@ -1,0 +1,106 @@
+[
+    {
+        "Letter": "A",
+        "phoneticAlpha": "Alpha"
+    },
+    {
+        "Letter": "B",
+        "phoneticAlpha": "Bravo"
+    },
+    {
+        "Letter": "C",
+        "phoneticAlpha": "Charlie"
+    },
+    {
+        "Letter": "D",
+        "phoneticAlpha": "Delta"
+    },
+    {
+        "Letter": "E",
+        "phoneticAlpha": "Echo"
+    },
+    {
+        "Letter": "F",
+        "phoneticAlpha": "Foxtrot"
+    },
+    {
+        "Letter": "G",
+        "phoneticAlpha": "Golf"
+    },
+    {
+        "Letter": "H",
+        "phoneticAlpha": "Hotel"
+    },
+    {
+        "Letter": "I",
+        "phoneticAlpha": "India"
+    },
+    {
+        "Letter": "J",
+        "phoneticAlpha": "Juliett"
+    },
+    {
+        "Letter": "K",
+        "phoneticAlpha": "Kilo"
+    },
+    {
+        "Letter": "L",
+        "phoneticAlpha": "Lima"
+    },
+    {
+        "Letter": "M",
+        "phoneticAlpha": "Mike"
+    },
+    {
+        "Letter": "N",
+        "phoneticAlpha": "November"
+    },
+    {
+        "Letter": "O",
+        "phoneticAlpha": "Oscar"
+    },
+    {
+        "Letter": "P",
+        "phoneticAlpha": "Papa"
+    },
+    {
+        "Letter": "Q",
+        "phoneticAlpha": "Quebec"
+    },
+    {
+        "Letter": "R",
+        "phoneticAlpha": "Romeo"
+    },
+    {
+        "Letter": "S",
+        "phoneticAlpha": "Sierra"
+    },
+    {
+        "Letter": "T",
+        "phoneticAlpha": "Tango"
+    },
+    {
+        "Letter": "U",
+        "phoneticAlpha": "Uniform"
+    },
+    {
+        "Letter": "V",
+        "phoneticAlpha": "Victor"
+    },
+    {
+        "Letter": "W",
+        "phoneticAlpha": "Whiskey"
+    },
+    {
+        "Letter": "X",
+        "phoneticAlpha": "X-ray"
+    },
+    {
+        "Letter": "Y",
+        "phoneticAlpha": "Yankee"
+    },
+    {
+        "Letter": "Z",
+        "phoneticAlpha": "Zulu"
+    }
+]
