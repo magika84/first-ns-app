@@ -27,17 +27,18 @@
             <TabViewItem class="fa h3" :title="'fa-plane' | fonticon">
               <StackLayout dock="top" height="90%" width="100%">
                 <Image class="logo" src="~/assets/images/logo.png"></Image>
-                <ListView for="item in items">
+                <CardView class="cardStyle" elevation="40" radius="10">
+                  <ListView for="item in items">
                   <v-template>
-                    <CardView class="cardStyle" elevation="40" radius="10">
+                    
                     <StackLayout class="cardContent">
                       <Label textWrap="true" :text="item.line" />
                       <Label text="Tap to Select" />
                     </StackLayout>
-                    </CardView>
+                   
                   </v-template>
                 </ListView>
-                
+                 </CardView>
                 // Add Play Icon
                 
                 <Label
@@ -92,7 +93,7 @@
                     <CardView class="cardStyle" elevation="40" radius="10">
                       <StackLayout class="cardContent"> 
                         <Label textWrap="true" text="Aircraft:"/>
-                         <TextField :text="SelectedAircraft.aircraftName + ' ' + SelectedAircraft.aircraftnumber" hint="Tap to Select" editable="false" @tap="onCustomArcrftTap"/>
+                         <TextField :text="SelectedAircraftLine" hint="Tap to Select" editable="false" @tap="onCustomArcrftTap"/>
                       </StackLayout>
                     </CardView>
                     <CardView class="cardStyle" elevation="40" radius="10">
@@ -100,11 +101,15 @@
                         <Label textWrap="true" text="Action:"/>
                         <TextField :text="SelectedPlaneAction.line" hint="Tap to Select" editable="false" @tap="onCustomPlaneActnTap"/>
                       </StackLayout>
+
                     </CardView>
                     <CardView class="cardStyle" elevation="40" radius="10">
                       <StackLayout class="cardContent"> 
-                        <Label textWrap="true" text="Script:"/>
-                        <TextField text="Coming soon" hint="Nothing to see" editable="false" />
+                        <Label textWrap="true" text="Script:"/>"
+                        <Label/>
+                        <Label textWrap="true" :text="CustomScriptLine"  editable="false" />
+                        <Label/>
+                        <Label :text="'fa-commenting' | fonticon" class="h1" textAlignment="center" @tap="onPlayTap" />
                       </StackLayout>
                     </CardView>                    
                 
@@ -125,7 +130,7 @@ import PlaneActionList from "./PlaneActionList";
 export default {
    data() {
     return {
-      SelectedAircraftLine: "",
+      finalselected: false,
       SelectedAirport: {
         faaID: "",
         airportName: ""
@@ -147,6 +152,14 @@ export default {
         }
       ]
     };
+  },
+  computed: {
+    SelectedAircraftLine: function() {
+      return this.SelectedAircraft.aircraftName + " " + this.SelectedAircraft.aircraftnumber;
+    },
+    CustomScriptLine: function() {
+      return this.SelectedAirport.airportName + " Traffic, " + this.SelectedAircraft.aircraftName + " " + this.SelectedAircraft.aircraftnumber + ", " + this.SelectedPlaneAction.line + ", " + this.SelectedAirport.airportName;
+    }
   },
   methods: {
     save() {
@@ -173,6 +186,7 @@ export default {
       const newId = new Date().getTime();
       
       //console.log(args);
+      finalselected: true;
       this.$showModal(AircraftList, { props: { id : newId }, fullscreen: true }).then(data => this.SelectedAircraft = data);
       
     },
@@ -180,7 +194,7 @@ export default {
       const newId = new Date().getTime();
 
       this.$showModal(PlaneActionList, { props: { id : newId } }).then(data => this.SelectedPlaneAction = data);
-
+      console.log("In onCustomPlaneActnTap method - after this.$showModal");
       
     },
     onPlayTap: function(args) {

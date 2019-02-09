@@ -4,14 +4,15 @@
 
 
   <ScrollView orientation="vertical">
-      <StackLayout height="100%">
+      <StackLayout height="30%">
         <StackLayout width="95%" marginTop="15" borderRadius="5" paddingTop="5">
-
+              <CardView class="cardStyle" elevation="40" radius="10">
                 <ListView class="list-group" for="item in planeActions" style="height:75%" @itemTap="onPlaneActionTap">
                   <v-template>
                     <Label :text="item.line" textWrap="true" class="list-group-item-heading h3"/>
                   </v-template>
                 </ListView>
+              </CardView>
         </StackLayout>
       </StackLayout>
   </ScrollView>
@@ -26,13 +27,13 @@ export default {
      return {  
     planeActions: [
         {
-          line: "downwind"
+          line: "Downwind"
         },
         {
-          line: "base"
+          line: "Base"
         },
         {
-          line: "final"
+          line: "Final"
         }
       ],   
     }
