@@ -42,6 +42,9 @@ const store = new Vuex.Store({
     allAirports(state, getters) {
        
         return state.data;
+    },
+    allRunway(state, getters){
+        return state.data;
     }
 
 },
@@ -61,6 +64,17 @@ const store = new Vuex.Store({
           });
       }
     },
+    muloadRunway(state, data) {
+      console.log("Calling muloadRunway in mutation ", data.data.length);
+        state.data = [];
+        for(var i = 0; i < data.data.length; i++) {
+            state.data.push({
+                faaID: data.data[i][0],
+                runway: data.data[i][1]
+                
+            });
+        }
+      },
     muloadAircrafts(state, data) {
         console.log("calling muloadAircrafts in mutation ", data.data.length);
           state.data = [];
@@ -124,6 +138,15 @@ const store = new Vuex.Store({
       console.log("Action section: Entering Query Airports");
       context.state.database.all("SELECT faaID, airportName FROM airportTable", []).then(result => {
           context.commit("muloadAirports", { data: result });
+      console.log("Action section: completed query - ", result);
+      }, error => {
+          console.log("SELECT ERROR", error);
+      });
+    },
+    queryRunway(context) {
+      console.log("Action section: Entering Query Runway");
+      context.state.database.all("SELECT faaID, runway FROM runwayTable", []).then(result => {
+          context.commit("muloadRunway", { data: result });
       console.log("Action section: completed query - ", result);
       }, error => {
           console.log("SELECT ERROR", error);

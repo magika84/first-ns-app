@@ -85,9 +85,13 @@
               <StackLayout dock="top" height="90%" width="100%">
               
                     <CardView class="cardStyle" elevation="40" radius="10">
-                      <StackLayout class="cardContent"  > 
-                        <Label textWrap="true" text="Airport Name:"/>
-                        <TextField :text="SelectedAirport.airportName" hint="Tap to Select" editable="false" @tap="onCustomArprtTap"/>
+                      <StackLayout  class="cardContent"  > 
+                        
+                        <Label row="0" col="0" textWrap="true" text="Airport Name:"/>
+                        <TextField row="1" col="0" :text="SelectedAirport.airportName" hint="Tap to Select" editable="false" @tap="onCustomArprtTap"/>
+                        <Label row="0" col="1" textWrap="true" text="Heading:"/>
+                        <TextField row="1" col="1" text="" hint="Tap to Select" editable="false" />
+                        
                       </StackLayout>
                     </CardView>
                     <CardView class="cardStyle" elevation="40" radius="10">
@@ -166,8 +170,8 @@ export default {
     // Creating a script line
     CustomScriptLine: function() {
       return this.SelectedAirport.airportName + " Traffic, " + this.SelectedAircraft.aircraftName + " " + this.IndvdlCharLine + ", " + this.SelectedPlaneAction.line + ", " + this.SelectedAirport.airportName;
-    },
-    // Separate input into c such as Aircraft number and heading 
+    }
+
 
   },
   methods: {
@@ -177,11 +181,11 @@ export default {
       for ( var i = 0; i < this.phoneticLetters.length; i++){
       //console.log(this.phoneticLetters[i].Letter);
 
-      if (this.phoneticLetters[i].Letter === letter){
+        if (this.phoneticLetters[i].Letter === letter){
           //console.log(this.phoneticLetters[i].phoneticAlpha);
           return this.phoneticLetters[i].phoneticAlpha;
           break;
-      }
+        }
       }
       //this.phoneticLetters.forEach(x => { console.log(x.Letter, x.phoneticAlpha); });
 
@@ -213,16 +217,7 @@ export default {
       //   console.log("This character is Number: " +inputtxt[j]);
       };
     console.log("IndvdlCharLine - ", this.IndvdlCharLine);
-  /*    if(inputtxt.value.match(letters))
-      {
-        alert('Your name have accepted : you can try another');
-        return true;
-      }
-      else
-      {
-        alert('Please input alphabet characters only');
-        return false;
-      }*/
+
       },
     save() {
       this.$store.dispatch("insert", this.input);
