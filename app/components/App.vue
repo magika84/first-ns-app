@@ -126,11 +126,13 @@
 import AirportList from "./AirportList";
 import AircraftList from "./AircraftList";
 import PlaneActionList from "./PlaneActionList";
-//import PhoneticLetters from "../phoneticTable";
+import PhoneticLetters from "./phoneticTable.json";
 
 export default {
    data() {
     return {
+      phoneticLetters: PhoneticLetters,
+      IndvdlCharLine: "",
       finalselected: false,
       SelectedAirport: {
         faaID: "",
@@ -159,27 +161,58 @@ export default {
     SelectedAircraftLine: function() {
       this.speakIndividual(this.SelectedAircraft.aircraftnumber);
       return this.SelectedAircraft.aircraftName + " " + this.SelectedAircraft.aircraftnumber;
+      
     },
     // Creating a script line
     CustomScriptLine: function() {
-      return this.SelectedAirport.airportName + " Traffic, " + this.SelectedAircraft.aircraftName + " " + this.SelectedAircraft.aircraftnumber + ", " + this.SelectedPlaneAction.line + ", " + this.SelectedAirport.airportName;
+      return this.SelectedAirport.airportName + " Traffic, " + this.SelectedAircraft.aircraftName + " " + this.IndvdlCharLine + ", " + this.SelectedPlaneAction.line + ", " + this.SelectedAirport.airportName;
     },
     // Separate input into c such as Aircraft number and heading 
 
   },
   methods: {
+    letter2codeword: function(letter){
+
+      //console.log("letter2codeword(letter) is: ",letter);
+      for ( var i = 0; i < this.phoneticLetters.length; i++){
+      //console.log(this.phoneticLetters[i].Letter);
+
+      if (this.phoneticLetters[i].Letter === letter){
+          //console.log(this.phoneticLetters[i].phoneticAlpha);
+          return this.phoneticLetters[i].phoneticAlpha;
+          break;
+      }
+      }
+      //this.phoneticLetters.forEach(x => { console.log(x.Letter, x.phoneticAlpha); });
+
+    },
     speakIndividual: function(inputtxt)
     { 
       var letters = /^[A-Za-z]+$/;
-      var j, IndvdlCharLine;
-
+      var j;
+      this.IndvdlCharLine = "";
       for( j = 0; j < inputtxt.length; j++){
-        if (letters.test(inputtxt[j]))
-          console.log("This character is Letter: " +inputtxt[j]);
-        else
-          console.log("This character is Number: " +inputtxt[j]);
+        if (letters.test(inputtxt[j])){
+          if(j != 0){
+            this.IndvdlCharLine += " " + this.letter2codeword(inputtxt[j]);
+          }else{
+            this.IndvdlCharLine += this.letter2codeword(inputtxt[j]);
+          }
+          
+          //console.log("This character is Letter: " +inputtxt[j]);
+          //console.log("IndvdlCharLine - ", IndvdlCharLine);
+        }
+        else{
+          if(j != 0){
+            this.IndvdlCharLine += " " + inputtxt[j];
+          }else{
+            this.IndvdlCharLine += inputtxt[j];
+          }
+        }
+          
+      //   console.log("This character is Number: " +inputtxt[j]);
       };
-
+    console.log("IndvdlCharLine - ", this.IndvdlCharLine);
   /*    if(inputtxt.value.match(letters))
       {
         alert('Your name have accepted : you can try another');
