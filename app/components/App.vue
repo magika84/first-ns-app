@@ -60,6 +60,7 @@
             <TabViewItem class="fa h3" :title="'fa-commenting-o' | fonticon" >
               
               <StackLayout orientation="vertical" width="100%" height="100%">    
+                <GridLayout columns="*, 150" rows="auto, auto, auto, auto">
                         <CardView col="0" row="0" class="cardStyle" elevation="40" radius="10">
                           <StackLayout  class="cardContent"  > 
                             <Label  text="Airport Name:"/>
@@ -74,7 +75,7 @@
                       </StackLayout>
                     </CardView>
 
-                    <CardView  class="cardStyle" elevation="40" radius="10">
+                    <CardView col="0" row="1" colSpan="2" class="cardStyle" elevation="40" radius="10">
                       <StackLayout class="cardContent"> 
                         <Label textWrap="true" text="Aircraft:"/>
                          <TextField :text="SelectedAircraftLine" hint="Tap to Select" editable="false" @tap="onCustomArcrftTap"/>
@@ -82,7 +83,7 @@
                     </CardView>
                 
                 
-                    <CardView  class="cardStyle" elevation="40" radius="10">
+                    <CardView col="0" row="2" colSpan="2" class="cardStyle" elevation="40" radius="10">
                       <StackLayout class="cardContent"> 
                         <Label textWrap="true" text="Action:"/>
                         <TextField :text="SelectedPlaneAction.line" hint="Tap to Select" editable="false" @tap="onCustomPlaneActnTap"/>
@@ -90,7 +91,7 @@
 
                     </CardView>
                 
-                    <CardView  class="cardStyle" elevation="40" radius="10">
+                    <CardView col="0" row="3" colSpan="2" class="cardStyle" elevation="40" radius="10">
                       <StackLayout class="cardContent"> 
                         <Label textWrap="true" text="Script:"/>"
                         <Label/>
@@ -99,6 +100,7 @@
                         <Label :text="'fa-commenting' | fonticon" class="h1" textAlignment="center" @tap="onPlayTap" />
                       </StackLayout>
                     </CardView>           
+                </GridLayout>
               </StackLayout>
               
             </TabViewItem>
@@ -158,6 +160,7 @@ export default {
     },
     // Creating a script line
     CustomScriptLine: function() {
+      
       return this.SelectedAirport.airportName + " Traffic, " + this.SelectedAircraft.aircraftName + " " + this.IndvdlCharLine + ", " + this.SelectedPlaneAction.line + " " + this.SelectedHeading.runway + ", " + this.SelectedAirport.airportName;
     }
 
@@ -184,6 +187,7 @@ export default {
       var j;
       this.IndvdlCharLine = "";
       for( j = 0; j < inputtxt.length; j++){
+        // is the character letter?
         if (letters.test(inputtxt[j])){
           if(j != 0){
             this.IndvdlCharLine += " " + this.letter2codeword(inputtxt[j]);
