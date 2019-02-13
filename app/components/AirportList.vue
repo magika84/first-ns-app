@@ -3,7 +3,7 @@
         <ActionBar title="Airport list" class="action-bar"/>
 
 
-  <ScrollView orientation="vertical">
+          <ScrollView orientation="vertical">
 
                
                 <ListView for="airport in $store.state.data" class="list-group"  @itemTap="onAirportNameTap">
@@ -17,7 +17,7 @@
                 </ListView>
           
 
-  </ScrollView>
+      </ScrollView>
 
     </Page>
 </template>
@@ -32,18 +32,16 @@ export default {
   },
   methods: {
     loadAirports() {
-      //this.$store.dispatch("query");
+  
       this.$store.dispatch("queryAirports").then(() => {
         this.airports = this.$store.getters.allAirports;
         console.log(this.airports);
       });
 
     },
-    //onAirportNameTap: function(args) {
+
     onAirportNameTap(args) {
-      //this.airportsource.airportName = args.item.airportName;
-      //this.navigateBack();
-       // alert(args.index + " " + args.item.faaID + " " +  args.item.airportName);
+
        this.$modal.close(args.item);
 
     }

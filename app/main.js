@@ -43,7 +43,7 @@ const store = new Vuex.Store({
        
         return state.data;
     },
-    allRunway(state, getters){
+    allRunway(state, getters) {
         return state.data;
     }
 
