@@ -3,7 +3,7 @@
         <ActionBar title="Runway list" class="action-bar"/>
 
 
-  <ScrollView orientation="vertical">
+            <ScrollView orientation="vertical">
 
                
                 <ListView for="runway in $store.state.data" class="list-group"  @itemTap="onRunwayHeadingTap">

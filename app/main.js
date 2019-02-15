@@ -3,9 +3,9 @@ import App from './components/App'
 import VueDevtools from 'nativescript-vue-devtools'
 import Vuex from 'vuex';
 import {TNSFontIcon, fonticon} from 'nativescript-fonticon';
+
 Vue.registerElement('CardView', () => require('nativescript-cardview').CardView);
-
-
+ 
 TNSFontIcon.debug = true;
 TNSFontIcon.paths = {
   'fa': './assets/css/font-awesome.css',

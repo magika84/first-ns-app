@@ -58,20 +58,20 @@
 
             // third page - Custom page
             <TabViewItem class="fa h3" :title="'fa-commenting-o' | fonticon" >
-              
-              <StackLayout orientation="vertical" width="100%" height="100%">    
+             <ScrollView orientation="vertical">
+              <StackLayout orientation="vertical" width="100%" >    
                 <GridLayout columns="*, 150" rows="auto, auto, auto, auto">
                         <CardView col="0" row="0" class="cardStyle" elevation="40" radius="10">
                           <StackLayout  class="cardContent"  > 
                             <Label  text="Airport Name:"/>
-                            <TextField  :text="this.SelectedAirport.airportName" hint="Tap to Select" editable="false" @tap="onCustomArprtTap"/>
+                            <TextField  :text="SelectedAirportName" hint="Tap to Select" editable="false" @tap="onCustomArprtTap"/>
                           </StackLayout>
                         </CardView>
                   
                     <CardView col="1" row="0"   class="cardStyle" elevation="40" radius="10">
                       <StackLayout  class="cardContent">
                         <Label text="Heading:"/>
-                        <TextField :text="SelectedHeading.runway" hint="Tap to Select" editable="false" @tap="onCustomHeadingTap" />
+                        <TextField :isEnabled="AirportSelected" :text="SelectedRunway" hint="Tap to Select" editable="false" @tap="onCustomHeadingTap" />
                       </StackLayout>
                     </CardView>
 
@@ -102,7 +102,7 @@
                     </CardView>           
                 </GridLayout>
               </StackLayout>
-              
+             </ScrollView>
             </TabViewItem>
           </TabView>
         </DockLayout>
@@ -118,13 +118,14 @@ import PlaneActionList from "./PlaneActionList";
 import RunwayList from "./RunwayList";
 import PhoneticLetters from "./phoneticTable.json";
 
+
 export default {
    data() {
     return {
+
       AirportSelected: false,
       phoneticLetters: PhoneticLetters,
       IndvdlCharLine: "",
-      finalselected: false,
       SelectedAirport: {
         faaID: "",
         airportName: ""
@@ -137,7 +138,9 @@ export default {
         faaID: "",
         runway: ""
       },
-      SelectedPlaneAction: "",
+      SelectedPlaneAction: { 
+        line: ""
+      },
       scripts: [],
       textFieldValue: "",
 
@@ -157,6 +160,13 @@ export default {
       this.speakIndividual(this.SelectedAircraft.aircraftnumber);
       return this.SelectedAircraft.aircraftName + " " + this.SelectedAircraft.aircraftnumber;
       
+    },
+    SelectedAirportName: function(){
+      console.log("Inside computed - SelectedAirport: " + this.SelectedAirport.airportName);
+        return this.SelectedAirport.airportName;      
+    },
+    SelectedRunway: function() {
+      return this.SelectedHeading.runway;
     },
     // Creating a script line
     CustomScriptLine: function() {
@@ -241,7 +251,7 @@ export default {
       const newId = new Date().getTime();
       
       //console.log(args);
-      finalselected: true;
+      
       this.$showModal(AircraftList, { props: { id : newId }, fullscreen: true }).then(data => this.SelectedAircraft = data);
       
     },
@@ -253,8 +263,8 @@ export default {
       
     },
     onPlayTap: function(args) {
-      console.log("Play icon tapped!");
-      alert("Play icon tapped! ");
+        alert("you pressed play icon!");
+
     },
   }
  

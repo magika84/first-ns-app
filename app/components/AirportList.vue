@@ -35,7 +35,7 @@ export default {
   
       this.$store.dispatch("queryAirports").then(() => {
         this.airports = this.$store.getters.allAirports;
-        console.log(this.airports);
+        //console.log(this.airports);
       });
 
     },
