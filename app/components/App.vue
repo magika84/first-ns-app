@@ -64,14 +64,14 @@
                         <CardView col="0" row="0" class="cardStyle" elevation="40" radius="10">
                           <StackLayout  class="cardContent"  > 
                             <Label  text="Airport Name:"/>
-                            <TextField  :text="SelectedAirportName" hint="Tap to Select" editable="false" @tap="onCustomArprtTap"/>
+                            <Button :text="SelectedAirportName" hint="Tap to Select" editable="false"  @tap="onCustomArprtTap" />
                           </StackLayout>
                         </CardView>
                   
                     <CardView col="1" row="0"   class="cardStyle" elevation="40" radius="10">
                       <StackLayout  class="cardContent">
                         <Label text="Heading:"/>
-                        <TextField :isEnabled="AirportSelected" :text="SelectedRunway" hint="Tap to Select" editable="false" @tap="onCustomHeadingTap" />
+                        <Button :isEnabled="AirportSelected" :text="SelectedRunway" hint="Tap to Select" editable="false" @tap="onCustomHeadingTap" />
                       </StackLayout>
                     </CardView>
 
@@ -117,12 +117,23 @@ import AircraftList from "./AircraftList";
 import PlaneActionList from "./PlaneActionList";
 import RunwayList from "./RunwayList";
 import PhoneticLetters from "./phoneticTable.json";
+import { TNSTextToSpeech, SpeakOptions } from 'nativescript-texttospeech';
 
+ const TTS = new TNSTextToSpeech();
 
 export default {
    data() {
     return {
-
+      
+      speakOptions: this.SpeakOptions = {
+        text: '', /// *** required ***
+        speakRate: 0.5, // optional - default is 1.0
+        pitch: 1.0, // optional - default is 1.0
+        volume: 1.0, // optional - default is 1.0
+        locale: "en-US",  // optional - default is system locale,
+        //finishedCallback: function // optional
+      },
+      
       AirportSelected: false,
       phoneticLetters: PhoneticLetters,
       IndvdlCharLine: "",
@@ -161,11 +172,12 @@ export default {
       return this.SelectedAircraft.aircraftName + " " + this.SelectedAircraft.aircraftnumber;
       
     },
-    SelectedAirportName: function(){
-      console.log("Inside computed - SelectedAirport: " + this.SelectedAirport.airportName);
+    SelectedAirportName: function() {
+      
         return this.SelectedAirport.airportName;      
     },
     SelectedRunway: function() {
+      
       return this.SelectedHeading.runway;
     },
     // Creating a script line
@@ -214,11 +226,12 @@ export default {
           }
         }
           
-      //   console.log("This character is Number: " +inputtxt[j]);
+      
       };
-        console.log("IndvdlCharLine - ", this.IndvdlCharLine);
+       
 
       },
+     
     save() {
       this.$store.dispatch("insert", this.input);
     },
@@ -244,7 +257,7 @@ export default {
       
       console.log(args);
 
-      this.$showModal(RunwayList, { props: { id : newId }, fullscreen: true }).then(data => {this.SelectedHeading = data; console.log("this.SelectedHeading: " + this.SelectedHeading);});
+      this.$showModal(RunwayList, { props: { id : newId }, fullscreen: true }).then(data => {this.SelectedHeading = data; console.log("this.SelectedHeading: " + this.SelectedHeading.rnwyfaaID);});
       
     },
     onCustomArcrftTap: function(args) {
@@ -263,7 +276,16 @@ export default {
       
     },
     onPlayTap: function(args) {
-        alert("you pressed play icon!");
+       // Call the `speak` method passing the SpeakOptions object
+      this.speakOptions.text = this.CustomScriptLine;
+      console.log("speakOptions.text is now: ", this.speakOptions.text);
+      TTS.speak(this.speakOptions).then(() => {
+         // everything is fine
+      }, (err) => {
+        // oops, something went wrong!
+        console.log("TTS (Text to Speech) error: ", err);
+      });
+        
 
     },
   }

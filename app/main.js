@@ -4,6 +4,7 @@ import VueDevtools from 'nativescript-vue-devtools'
 import Vuex from 'vuex';
 import {TNSFontIcon, fonticon} from 'nativescript-fonticon';
 
+
 Vue.registerElement('CardView', () => require('nativescript-cardview').CardView);
  
 TNSFontIcon.debug = true;
@@ -51,32 +52,32 @@ const store = new Vuex.Store({
   mutations: {
     init(state, data) {
       state.database = data.database;
-      console.log("state.database", state.database);
+      
     },
     muloadAirports(state, data) {
-    console.log("entering load in mutation ", data.data.length);
+    
       state.data = [];
       for(var i = 0; i < data.data.length; i++) {
           state.data.push({
-              faaID: data.data[i][0],
+              arprtfaaID: data.data[i][0],
               airportName: data.data[i][1]
               
           });
       }
     },
     muloadRunway(state, data) {
-      console.log("Calling muloadRunway in mutation ", data.data.length);
+      
         state.data = [];
         for(var i = 0; i < data.data.length; i++) {
             state.data.push({
-                faaID: data.data[i][0],
+                rnwyfaaID: data.data[i][0],
                 runway: data.data[i][1]
                 
             });
         }
       },
     muloadAircrafts(state, data) {
-        console.log("calling muloadAircrafts in mutation ", data.data.length);
+        
           state.data = [];
           for(var i = 0; i < data.data.length; i++) {
               state.data.push({
@@ -85,7 +86,7 @@ const store = new Vuex.Store({
                   
               });
           }
-          console.log("state.data is: ", state.data);
+          
         },
     save(state, data) {
       state.data.push({
