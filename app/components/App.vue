@@ -71,7 +71,7 @@
                     <CardView col="1" row="0"   class="cardStyle" elevation="40" radius="10">
                       <StackLayout  class="cardContent">
                         <Label text="Heading:"/>
-                        <Button :isEnabled="AirportSelected" :text="SelectedRunway" hint="Tap to Select" editable="false" @tap="onCustomHeadingTap" />
+                        <Button :isEnabled="AirportSelected" v-bind:text="SelectedRunway" hint="Tap to Select" editable="false" @tap="onCustomHeadingTap" />
                       </StackLayout>
                     </CardView>
 
@@ -124,14 +124,18 @@ import { TNSTextToSpeech, SpeakOptions } from 'nativescript-texttospeech';
 export default {
    data() {
     return {
-      
+      isSpeaking: false,
       speakOptions: this.SpeakOptions = {
+         
         text: '', /// *** required ***
         speakRate: 0.5, // optional - default is 1.0
         pitch: 1.0, // optional - default is 1.0
         volume: 1.0, // optional - default is 1.0
         locale: "en-US",  // optional - default is system locale,
-        //finishedCallback: function // optional
+        finishedCallback: (() => {
+                alert("Message Sent!");
+                this.isSpeaking = false;
+            })  
       },
       
       AirportSelected: false,
@@ -200,7 +204,6 @@ export default {
           break;
         }
       }
-
 
     },
     speakIndividual: function(inputtxt)
@@ -280,7 +283,7 @@ export default {
       this.speakOptions.text = this.CustomScriptLine;
       console.log("speakOptions.text is now: ", this.speakOptions.text);
       TTS.speak(this.speakOptions).then(() => {
-         // everything is fine
+         isSpeaking = true;
       }, (err) => {
         // oops, something went wrong!
         console.log("TTS (Text to Speech) error: ", err);
@@ -315,4 +318,6 @@ export default {
   height: 90;
   font-weight: bold;
 }
+
+
 </style>
