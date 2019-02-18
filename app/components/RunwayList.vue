@@ -25,27 +25,19 @@ export default {
         shortRnwyList: []
     }
   },
+
   methods: {
     loadRunway() {
       
       this.$store.dispatch("queryRunway").then(() => {
         this.runways = this.$store.getters.allRunway;
-       
-        
-        //trimHeadingList();
-      });
-      for(var i = 0; i < this.runways.length; i++ ){
-        console.log("this.runways.rnwyfaaID[" + i + "]: " + this.runways.rnwyfaaID[i]);
-      }
-    },
-    trimHeadingList(){
-      console.log("Inside matchAirport: SelectedAirport is :" + this.SelectedAirport.faaID);
-      for(var i = 0; i < this.runways.length; i++ ){
-        if(this.SelectedAirport.faaID == this.runways[i]){
-            this.shortRnwyList = this.runways;
-            console.log("Shorter version of Runway List: " + this.shortRnwyList[i][0] + " " + this.shortRnwyList[i][1]);
+        console.log("this.runways", this.runways.filter());
+        for(var i = 0; i < this.runways.length; i++ ){
+         console.log("this.runways.rnwyfaaID[" + i + "]: " + this.runways.rnwyfaaID[i]);  
         }
-      }    
+      });  
+      
+     
 
     },
     

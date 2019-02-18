@@ -97,7 +97,7 @@
                         <Label/>
                         <Label textWrap="true" :text="CustomScriptLine"  editable="false" />
                         <Label/>
-                        <Label :text="'fa-commenting' | fonticon" class="h1" textAlignment="center" @tap="onPlayTap" />
+                        <Label isEnabled="!this.isSpeaking" :text="'fa-commenting' | fonticon" class="h1" textAlignment="center" @tap="onPlayTap" />
                       </StackLayout>
                     </CardView>           
                 </GridLayout>
@@ -128,7 +128,7 @@ export default {
       speakOptions: this.SpeakOptions = {
          
         text: '', /// *** required ***
-        speakRate: 0.5, // optional - default is 1.0
+        speakRate: 0.7, // optional - default is 1.0
         pitch: 1.0, // optional - default is 1.0
         volume: 1.0, // optional - default is 1.0
         locale: "en-US",  // optional - default is system locale,
@@ -172,22 +172,25 @@ export default {
   computed: {
     // Aircraft Name need to be before Aircraft Number for script purpose
     SelectedAircraftLine: function() {
-      this.speakIndividual(this.SelectedAircraft.aircraftnumber);
+ 
       return this.SelectedAircraft.aircraftName + " " + this.SelectedAircraft.aircraftnumber;
       
     },
+    
     SelectedAirportName: function() {
       
         return this.SelectedAirport.airportName;      
     },
     SelectedRunway: function() {
-      
-      return this.SelectedHeading.runway;
+        
+        var tmpRunwayHeading = this.SelectedHeading.runway.toString();
+        console.log("Type of Runway: " + typeof tmpRunwayHeading);
+         return tmpRunwayHeading;
     },
     // Creating a script line
     CustomScriptLine: function() {
       
-      return this.SelectedAirport.airportName + " Traffic, " + this.SelectedAircraft.aircraftName + " " + this.IndvdlCharLine + ", " + this.SelectedPlaneAction.line + " " + this.SelectedHeading.runway + ", " + this.SelectedAirport.airportName;
+      return this.SelectedAirport.airportName + " Traffic, " + this.SelectedAircraft.aircraftName + " " + this.speakIndividual(this.SelectedAircraft.aircraftnumber) + ", " + this.SelectedPlaneAction.line + " " + this.speakIndividual(this.SelectedRunway) + ", " + this.SelectedAirport.airportName;
     }
 
 
@@ -231,8 +234,8 @@ export default {
           
       
       };
-       
-
+      console.log("IndvdlCharLine: ", this.IndvdlCharLine);
+      return this.IndvdlCharLine;
       },
      
     save() {
@@ -260,7 +263,7 @@ export default {
       
       console.log(args);
 
-      this.$showModal(RunwayList, { props: { id : newId }, fullscreen: true }).then(data => {this.SelectedHeading = data; console.log("this.SelectedHeading: " + this.SelectedHeading.rnwyfaaID);});
+      this.$showModal(RunwayList, { props: { id : newId }, fullscreen: true }).then(data => this.SelectedHeading = data);
       
     },
     onCustomArcrftTap: function(args) {
@@ -275,20 +278,21 @@ export default {
       const newId = new Date().getTime();
 
       this.$showModal(PlaneActionList, { props: { id : newId } }).then(data => this.SelectedPlaneAction = data);
-      console.log("In onCustomPlaneActnTap method - after this.$showModal");
+
       
     },
     onPlayTap: function(args) {
        // Call the `speak` method passing the SpeakOptions object
       this.speakOptions.text = this.CustomScriptLine;
       console.log("speakOptions.text is now: ", this.speakOptions.text);
-      TTS.speak(this.speakOptions).then(() => {
-         isSpeaking = true;
-      }, (err) => {
-        // oops, something went wrong!
-        console.log("TTS (Text to Speech) error: ", err);
-      });
-        
+      if(this.isSpeaking != true){
+        TTS.speak(this.speakOptions).then(() => {
+          this.isSpeaking = true;
+        }, (err) => {
+          // oops, something went wrong!
+          console.log("TTS (Text to Speech) error: ", err);
+        });
+      }
 
     },
   }

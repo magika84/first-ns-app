@@ -33,20 +33,28 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state:{
     database: null,
-    data: []
+    data: [],
+    aircrafts: [],
+    runways: []
   },
   getters: {
     allAircrafts(state, getters) {
         
-        return state.data;
+        return state.aircrafts;
     },
     allAirports(state, getters) {
        
         return state.data;
     },
     allRunway(state, getters) {
-        return state.data;
-    }
+        return state.runways;
+    },
+    
+  //   Need to work on this to trim the Runway list for selection
+     
+  /* trimmedRunwayList(state, getters) {
+      return state.allRunway.filter(runways => );
+  } */
 
 },
   mutations: {
@@ -67,9 +75,9 @@ const store = new Vuex.Store({
     },
     muloadRunway(state, data) {
       
-        state.data = [];
+        state.runways = [];
         for(var i = 0; i < data.data.length; i++) {
-            state.data.push({
+            state.runways.push({
                 rnwyfaaID: data.data[i][0],
                 runway: data.data[i][1]
                 
@@ -78,9 +86,9 @@ const store = new Vuex.Store({
       },
     muloadAircrafts(state, data) {
         
-          state.data = [];
+          state.aircrafts = [];
           for(var i = 0; i < data.data.length; i++) {
-              state.data.push({
+              state.aircrafts.push({
                   aircraftnumber: data.data[i][0],
                   aircraftName: data.data[i][1]
                   
