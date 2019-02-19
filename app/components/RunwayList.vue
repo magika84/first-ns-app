@@ -1,8 +1,9 @@
+<script src="http://192.168.1.176:8098"></script>
 <template>
-    <Page @loaded="loadRunway">
+    <Page >
         <ActionBar title="Runway List" class="action-bar"/>
 
-                <ListView for="runway in this.runways" class="list-group"  @itemTap="onRunwayHeadingTap">
+                <ListView for="runway in this.$store.getters.showspcfcRunwayList" class="list-group"  @itemTap="onRunwayHeadingTap">
                   <v-template>
                     <GridLayout columns="auto,*" rows="*, *" paddingLeft="10" paddingTop="5" paddingBottom="5" paddingRight="5">
                       <StackLayout width="95%" marginTop="15" borderRadius="5" paddingTop="5"  class="list-group-item">
@@ -20,29 +21,17 @@ export default {
   data() {
      return {
         faaID: "",
-        rwyHeading: "",
-        runways: [],
-        shortRnwyList: []
+        rwyHeading: ""
+
     }
   },
 
   methods: {
-    loadRunway() {
-      
-      this.$store.dispatch("queryRunway").then(() => {
-        this.runways = this.$store.getters.allRunway;
-        console.log("this.runways", this.runways.filter());
-        for(var i = 0; i < this.runways.length; i++ ){
-         console.log("this.runways.rnwyfaaID[" + i + "]: " + this.runways.rnwyfaaID[i]);  
-        }
-      });  
-      
-     
 
-    },
+
     
     onRunwayHeadingTap(args) {
-
+       
        this.$modal.close(args.item);
 
     }

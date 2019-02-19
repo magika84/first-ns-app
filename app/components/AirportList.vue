@@ -44,7 +44,9 @@ export default {
     },
 
     onAirportNameTap(args) {
-
+        console.log("args.item: ", args.item.arprtfaaID);
+        this.$store.commit("matchRunwaysWithAirport", args.item.arprtfaaID);
+        console.log("Completed calling to commit matchRunwaysWithAirport");
        this.$modal.close(args.item);
 
     }

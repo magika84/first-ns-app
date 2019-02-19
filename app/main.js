@@ -1,3 +1,4 @@
+
 import Vue from 'nativescript-vue'
 import App from './components/App'
 import VueDevtools from 'nativescript-vue-devtools'
@@ -16,9 +17,9 @@ TNSFontIcon.loadCss();
 
 Vue.filter('fonticon', fonticon);
 
-if(TNS_ENV !== 'production') {
+//if(TNS_ENV !== 'production') {
 Vue.use(VueDevtools);
-}
+//}
 // Prints Vue logs when --env.production is *NOT* set while building
 Vue.config.silent = (TNS_ENV === 'production')
 
@@ -35,7 +36,8 @@ const store = new Vuex.Store({
     database: null,
     data: [],
     aircrafts: [],
-    runways: []
+    runways: [],
+    matchSelectedfaaID: ""
   },
   getters: {
     allAircrafts(state, getters) {
@@ -46,21 +48,26 @@ const store = new Vuex.Store({
        
         return state.data;
     },
-    allRunway(state, getters) {
+    allRunways(state, getters) {
         return state.runways;
     },
-    
-  //   Need to work on this to trim the Runway list for selection
+    showspcfcRunwayList: (state, getters) =>  {
+      console.log("calling showspcfcRunwayList (state.matchSelectedfaaID) - " + state.matchSelectedfaaID);
+      return state.runways.filter(RUNWAY => RUNWAY.rnwyfaaID === state.matchSelectedfaaID);
+    }
      
-  /* trimmedRunwayList(state, getters) {
-      return state.allRunway.filter(runways => );
-  } */
+ 
 
 },
   mutations: {
     init(state, data) {
       state.database = data.database;
       
+    },
+    matchRunwaysWithAirport(state, payload){
+      console.log("inside matchRunwaysWithAirport (data.faaID) - " + payload);  
+      state.matchSelectedfaaID = payload;
+      console.log("inside matchRunwaysWithAirport (state.matchSelectedfaaID) - " + state.matchSelectedfaaID);
     },
     muloadAirports(state, data) {
     
@@ -84,6 +91,7 @@ const store = new Vuex.Store({
             });
         }
       },
+      // Load the airport info list
     muloadAircrafts(state, data) {
         
           state.aircrafts = [];
@@ -96,6 +104,7 @@ const store = new Vuex.Store({
           }
           
         },
+        // store Airport info into Database
     save(state, data) {
       state.data.push({
           faaID: data.data.faaID,

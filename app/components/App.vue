@@ -1,12 +1,13 @@
-<script src="http://192.168.1.176:8098"></script>
+
 <template>
-  <Page >// Action bar
+  <Page @loaded="loadRunway">// Action bar
     <ActionBar class="action-bar">
       <GridLayout width="100%" columns="auto, *">
         <Label width="10%" :text="'fa-bars' | fonticon" class="fa h3" @tap="$refs.drawer.nativeView.showDrawer()" col="0" />
         <Label width="90%" class="h3" text="Pilot Voice" col="1"/>
       </GridLayout>
-    </ActionBar>// Drawer Contents
+    </ActionBar>
+    // Drawer Contents
     <RadSideDrawer ref="drawer">
       <StackLayout ~drawerContent backgroundColor="#ffffff">
         <Label class="drawer-header sidedrawer-header" text="Profile"/>
@@ -125,11 +126,10 @@ export default {
    data() {
     return {
       isSpeaking: false,
-      speakOptions: this.SpeakOptions = {
-         
+      speakOptions: this.SpeakOptions = {  
         text: '', /// *** required ***
-        speakRate: 0.7, // optional - default is 1.0
-        pitch: 1.0, // optional - default is 1.0
+        speakRate: 0.9, // optional - default is 1.0
+        pitch: 0.6, // optional - default is 1.0
         volume: 1.0, // optional - default is 1.0
         locale: "en-US",  // optional - default is system locale,
         finishedCallback: (() => {
@@ -137,7 +137,6 @@ export default {
                 this.isSpeaking = false;
             })  
       },
-      
       AirportSelected: false,
       phoneticLetters: PhoneticLetters,
       IndvdlCharLine: "",
@@ -169,6 +168,7 @@ export default {
       ]
     };
   },
+  
   computed: {
     // Aircraft Name need to be before Aircraft Number for script purpose
     SelectedAircraftLine: function() {
@@ -182,20 +182,35 @@ export default {
         return this.SelectedAirport.airportName;      
     },
     SelectedRunway: function() {
-        
+        console.log("SelectHeading.runway: ", this.SelectedHeading.runway);
         var tmpRunwayHeading = this.SelectedHeading.runway.toString();
-        console.log("Type of Runway: " + typeof tmpRunwayHeading);
-         return tmpRunwayHeading;
+        return tmpRunwayHeading;
     },
     // Creating a script line
     CustomScriptLine: function() {
-      
       return this.SelectedAirport.airportName + " Traffic, " + this.SelectedAircraft.aircraftName + " " + this.speakIndividual(this.SelectedAircraft.aircraftnumber) + ", " + this.SelectedPlaneAction.line + " " + this.speakIndividual(this.SelectedRunway) + ", " + this.SelectedAirport.airportName;
+    },
+    ChosenAirportFaaID: function() {
+      console.log("ChosenAirportFaaID - ", this.SelectedAirport.faaID);
+      return this.SelectedAirport.faaID;
     }
 
 
   },
   methods: {
+/*    loadAll() {
+      loadRunway();
+      loadAirports();
+    },*/
+
+    loadRunway() {
+      
+      this.$store.dispatch("queryRunway").then(() => {
+        this.runways = this.$store.getters.allRunways;
+        
+      });  
+
+    },
     letter2codeword: function(letter){
 
       //console.log("letter2codeword(letter) is: ",letter);
@@ -234,7 +249,7 @@ export default {
           
       
       };
-      console.log("IndvdlCharLine: ", this.IndvdlCharLine);
+      //console.log("IndvdlCharLine: ", this.IndvdlCharLine);
       return this.IndvdlCharLine;
       },
      
@@ -252,18 +267,20 @@ export default {
       console.log("Item on pretext page with index: " + args.index + " tapped");
     },
     onCustomArprtTap: function(args) {
-      const newId = new Date().getTime();
-      
-      console.log(args);
-      this.$showModal(AirportList, { props: { id : newId }, fullscreen: true }).then(data => {this.SelectedAirport = data; if(this.SelectedAirport.airportName != "") this.AirportSelected = true; });
+
+
+      this.$showModal(AirportList, { fullscreen: true }).then(data => {
+        this.SelectedAirport = data; 
+        if(this.SelectedAirport.airportName != ""){ 
+          this.AirportSelected = true; 
+        }
+        
+      });
       
     },
     onCustomHeadingTap: function(args) {
-      const newId = new Date().getTime();
-      
-      console.log(args);
-
-      this.$showModal(RunwayList, { props: { id : newId }, fullscreen: true }).then(data => this.SelectedHeading = data);
+      //const newId = new Date().getTime();
+      this.$showModal(RunwayList,   {fullscreen: false} ).then(data => this.SelectedHeading = data);
       
     },
     onCustomArcrftTap: function(args) {
@@ -283,6 +300,7 @@ export default {
     },
     onPlayTap: function(args) {
        // Call the `speak` method passing the SpeakOptions object
+       
       this.speakOptions.text = this.CustomScriptLine;
       console.log("speakOptions.text is now: ", this.speakOptions.text);
       if(this.isSpeaking != true){
